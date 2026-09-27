@@ -1,0 +1,17 @@
+{
+  "name": "ora-skills",
+  "private": true,
+  "description": "Agent skills from Ora, installable with npx skills add ora/skills",
+  "license": "MIT",
+  "type": "module",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "validate": "node scripts/validate.mjs",
+    "sync": "node scripts/sync.mjs"
+  },
+  "devDependencies": {
+    "yaml": "^2.8.1"
+  }
+}

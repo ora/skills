@@ -1,0 +1,37 @@
+{
+  "_comment": "Host this at /.well-known/mcp/server-card.json - the canonical pre-connection discovery path per SEP-1649 / SEP-2127. For max compatibility you may also serve it at the flatter /.well-known/mcp.json that some crawlers and registries still probe. Keep the advertised tool count in sync with the live MCP server - drift downgrades trust.",
+  "name": "your-product",
+  "description": "What this MCP server lets an agent do, and when to use it. Be specific about the capability.",
+  "version": "1.0.0",
+  "serverUrl": "https://yourdomain.com/api/mcp",
+  "transport": "streamable-http",
+  "icon": "https://yourdomain.com/icon.png",
+  "capabilities": { "tools": true, "resources": true },
+  "tools": [
+    {
+      "name": "search_widgets",
+      "description": "Search widgets by query. Read-only. Returns matching widgets with id, name, and status.",
+      "annotations": { "readOnlyHint": true },
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "query": { "type": "string", "description": "Free-text search query" },
+          "limit": { "type": "number", "description": "Max results (default 10)" }
+        },
+        "required": ["query"]
+      }
+    },
+    {
+      "name": "create_widget",
+      "description": "Create a new widget. Mutates state. Returns the created widget id.",
+      "annotations": { "destructiveHint": false, "readOnlyHint": false },
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "name": { "type": "string", "description": "Display name for the widget" }
+        },
+        "required": ["name"]
+      }
+    }
+  ]
+}

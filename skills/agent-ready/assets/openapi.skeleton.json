@@ -1,0 +1,124 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Your Product API",
+    "version": "1.0.0",
+    "description": "What this API does and who it is for. Agents read this to decide whether and how to use you."
+  },
+  "servers": [{ "url": "https://api.yourdomain.com" }],
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": { "type": "http", "scheme": "bearer" },
+      "oauth2": {
+        "type": "oauth2",
+        "flows": {
+          "clientCredentials": {
+            "tokenUrl": "https://api.yourdomain.com/oauth/token",
+            "scopes": {
+              "read": "Read access",
+              "write": "Create and update resources"
+            }
+          }
+        }
+      }
+    },
+    "schemas": {
+      "Problem": {
+        "type": "object",
+        "description": "RFC 9457 problem detail. Returned for all 4xx/5xx as application/problem+json.",
+        "properties": {
+          "type": { "type": "string" },
+          "title": { "type": "string" },
+          "status": { "type": "integer" },
+          "detail": { "type": "string" }
+        },
+        "required": ["title", "status"]
+      },
+      "Widget": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string" },
+          "name": { "type": "string" }
+        },
+        "required": ["id", "name"]
+      },
+      "WidgetPage": {
+        "type": "object",
+        "properties": {
+          "data": { "type": "array", "items": { "$ref": "#/components/schemas/Widget" } },
+          "next_cursor": { "type": "string", "nullable": true }
+        },
+        "required": ["data"]
+      }
+    },
+    "responses": {
+      "Error": {
+        "description": "Error",
+        "content": {
+          "application/problem+json": { "schema": { "$ref": "#/components/schemas/Problem" } }
+        }
+      }
+    }
+  },
+  "security": [{ "bearerAuth": [] }],
+  "paths": {
+    "/v1/widgets": {
+      "get": {
+        "operationId": "listWidgets",
+        "summary": "List widgets (cursor-paginated)",
+        "parameters": [
+          { "name": "cursor", "in": "query", "schema": { "type": "string" } },
+          { "name": "limit", "in": "query", "schema": { "type": "integer", "default": 25 } }
+        ],
+        "responses": {
+          "200": {
+            "description": "A page of widgets",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/WidgetPage" } }
+            }
+          },
+          "401": { "$ref": "#/components/responses/Error" },
+          "429": {
+            "description": "Rate limited",
+            "headers": {
+              "RateLimit-Remaining": { "schema": { "type": "integer" } },
+              "Retry-After": { "schema": { "type": "integer" } }
+            },
+            "content": {
+              "application/problem+json": { "schema": { "$ref": "#/components/schemas/Problem" } }
+            }
+          }
+        }
+      },
+      "post": {
+        "operationId": "createWidget",
+        "summary": "Create a widget (idempotent)",
+        "parameters": [
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": { "type": "string" },
+            "description": "A client-generated key so retried calls do not create duplicates."
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": { "schema": { "$ref": "#/components/schemas/Widget" } }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/Widget" } }
+            }
+          },
+          "401": { "$ref": "#/components/responses/Error" },
+          "422": { "$ref": "#/components/responses/Error" }
+        }
+      }
+    }
+  }
+}

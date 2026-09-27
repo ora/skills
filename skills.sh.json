@@ -1,0 +1,16 @@
+{
+  "$schema": "https://skills.sh/schemas/skills.sh.schema.json",
+  "notGrouped": "bottom",
+  "groupings": [
+    {
+      "title": "Build",
+      "description": "Build products that agents can find, read, use, and pay.",
+      "skills": ["agent-ready"]
+    },
+    {
+      "title": "Measure and improve",
+      "description": "Audit a live site with Ora and fix it one check at a time.",
+      "skills": ["agent-ready-website"]
+    }
+  ]
+}

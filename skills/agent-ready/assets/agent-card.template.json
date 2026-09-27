@@ -1,0 +1,18 @@
+{
+  "name": "Your Product",
+  "description": "What you do, in one machine-readable sentence.",
+  "url": "https://yourdomain.com",
+  "version": "1.0.0",
+  "provider": { "organization": "Your Org", "url": "https://yourdomain.com" },
+  "capabilities": { "streaming": true },
+  "defaultInputModes": ["text"],
+  "defaultOutputModes": ["text"],
+  "skills": [
+    {
+      "id": "primary-capability",
+      "name": "Primary capability",
+      "description": "The main thing an agent can accomplish with you.",
+      "tags": ["category", "use-case"]
+    }
+  ]
+}

@@ -1,0 +1,37 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run validate
+
+      # The skills CLI is how skills.sh installs this repo. Every skill
+      # directory must be discovered, or it silently never ships.
+      - name: Skills CLI discovers every skill
+        env:
+          DISABLE_TELEMETRY: "1"
+        run: |
+          output="$(npx -y skills@latest add . --list 2>&1)"
+          echo "$output"
+          # Reduce each line to name characters so a skill line matches exactly
+          # (agent-ready must not pass on the strength of agent-ready-website).
+          listed="$(sed 's/[^a-z0-9-]//g' <<<"$output")"
+          for dir in skills/*/; do
+            name="$(basename "$dir")"
+            grep -qx -- "$name" <<<"$listed" || { echo "::error::skills CLI did not discover $name"; exit 1; }
+          done

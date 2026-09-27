@@ -1,0 +1,37 @@
+name: Sync skills from ora.ai
+
+# Mirrors the registry-generated skills ora.ai publishes at
+# /.well-known/agent-skills/ and opens a PR when their bytes change.
+# Requires "Allow GitHub Actions to create and approve pull requests" in the
+# repo (or org) Actions settings.
+
+on:
+  schedule:
+    - cron: "0 6 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run sync
+      - run: npm run validate
+      - uses: peter-evans/create-pull-request@5f6978faf089d4d20b00c7766989d076bb2fc7f1 # v8.1.1
+        with:
+          branch: sync/ora-ai
+          commit-message: "chore(sync): mirror skills from ora.ai"
+          title: "chore(sync): mirror skills from ora.ai"
+          body: |
+            Automated mirror of the skills published at https://ora.ai/.well-known/agent-skills/index.json.
+            Every file matched its published sha256 digest before it was written. See the workflow run for any skipped skills.
+          delete-branch: true

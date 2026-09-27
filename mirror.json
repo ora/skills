@@ -1,0 +1,9 @@
+{
+  "source": "https://ora.ai/.well-known/agent-skills/index.json",
+  "skills": {
+    "agent-ready-website": {
+      "url": "https://ora.ai/.well-known/agent-skills/agent-ready-website/SKILL.md",
+      "digest": "sha256:ba96de0c30c85f38b7b01d131182063aee62fa6873c265fe703a8ca61f5238db"
+    }
+  }
+}

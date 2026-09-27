@@ -1,0 +1,20 @@
+# Your Product
+
+> One line on what you do and who it is for. Keep it concrete: the capability an agent would search for.
+
+## Docs
+
+- [Quickstart](https://yourdomain.com/docs/quickstart): get a first call working in minutes
+- [API reference](https://yourdomain.com/docs/api): every endpoint, generated from the OpenAPI spec
+- [Authentication](https://yourdomain.com/docs/auth): how to get credentials and authenticate (human and agent)
+
+## API
+
+- [OpenAPI spec](https://yourdomain.com/openapi.json): machine-readable API description
+- [MCP server](https://yourdomain.com/.well-known/mcp/server-card.json): tools an agent can call to take action
+
+## Product
+
+- [Pricing](https://yourdomain.com/pricing): plans and costs
+- [When to use](https://yourdomain.com/docs/when-to-use): the tasks this product is the right choice for
+- [Changelog](https://yourdomain.com/changelog): what changed and any deprecations

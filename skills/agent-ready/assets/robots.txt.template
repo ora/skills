@@ -1,0 +1,20 @@
+# robots.txt - your crawler and AI policy.
+#
+# Allow / Disallow control which crawlers may fetch which paths.
+# Content-Signal declares intent for three distinct uses (set each yes or no):
+#   ai-train  - using your content to train models
+#   search    - indexing for search / answer engines
+#   ai-input  - fetching at answer time to ground a response (RAG, citations)
+# Disallowing a crawler or setting a signal to "no" removes you from that use.
+# Decide each based on what you want agents to do with your content.
+
+User-agent: *
+Allow: /
+Disallow: /auth/
+Disallow: /sign-in
+Disallow: /admin/
+
+Content-Signal: ai-train=yes, search=yes, ai-input=yes
+
+Sitemap: https://yourdomain.com/sitemap.xml
+schemamap: https://yourdomain.com/schemamap.xml

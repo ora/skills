@@ -1,0 +1,49 @@
+{
+  "_comment": "Example of an MCP tool that hands a decision back to a human via an MCP App. The tool references a ui:// resource the host renders as an interactive view; the user's choice flows back as the tool result. Adapt to your MCP server framework - the shape that matters is (1) a registered ui:// resource and (2) a tool that points at it.",
+
+  "resources": [
+    {
+      "uri": "ui://yourproduct/confirm-order",
+      "name": "Confirm order",
+      "description": "Interactive order-confirmation card: line items, total, and a confirm / cancel control.",
+      "mimeType": "text/html+skybridge"
+    }
+  ],
+
+  "tools": [
+    {
+      "name": "confirm_order",
+      "description": "Present an order for human confirmation before charging. Renders an interactive confirmation card (MCP App) and returns the human's decision. Use at the final, irreversible step of a purchase.",
+      "annotations": { "destructiveHint": true },
+      "ui": "ui://yourproduct/confirm-order",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "order_id": { "type": "string", "description": "The draft order to confirm" },
+          "line_items": {
+            "type": "array",
+            "description": "Items to display in the confirmation card",
+            "items": {
+              "type": "object",
+              "properties": {
+                "name": { "type": "string" },
+                "quantity": { "type": "number" },
+                "price": { "type": "number" }
+              },
+              "required": ["name", "quantity", "price"]
+            }
+          },
+          "total": { "type": "number", "description": "Total amount to charge" },
+          "currency": { "type": "string", "description": "ISO 4217 currency code, e.g. USD" }
+        },
+        "required": ["order_id", "total", "currency"]
+      },
+      "_result_shape": {
+        "_comment": "What the tool returns after the human acts - keep the machine-readable decision separate from the rendered view.",
+        "decision": "confirmed | cancelled",
+        "order_id": "string",
+        "confirmed_at": "ISO 8601 timestamp"
+      }
+    }
+  ]
+}
