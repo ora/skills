@@ -1,0 +1,1 @@
+We run a concert ticketing site. Plan an MCP server so agents can search events, hold seats, and buy tickets for a user. Write the plan to docs/mcp-plan.md, including the tool list with input schemas. No code yet.

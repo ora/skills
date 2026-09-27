@@ -10,6 +10,7 @@ import { NAME_PATTERN, ROOT, SKILLS_DIR, parseSkill, readMirror, sha256 } from "
 const ALLOWED_KEYS = new Set(["name", "description", "license", "compatibility", "metadata", "allowed-tools"]);
 const MAX_BODY_LINES = 500;
 const BODY_TOKEN_BUDGET = 5000;
+const TOC_THRESHOLD_LINES = 100;
 // Backticked relative file references: `references/x.md`, `assets/y.json`, `usability.md`.
 const FILE_REF = /`((?:references|assets|scripts)\/[\w./-]+|[\w-]+\.md)`/g;
 
@@ -56,6 +57,10 @@ function checkFiles(name, skillDir, report) {
     const rel = relative(ROOT, file);
     if (/[\u2013\u2014]/.test(text)) report(`${rel} contains an em or en dash (use " - ")`);
     if (!file.endsWith(".md")) continue;
+    const isReference = file.startsWith(join(skillDir, "references"));
+    if (isReference && text.split("\n").length > TOC_THRESHOLD_LINES && !/^## Contents$/m.test(text)) {
+      report(`${rel} is over ${TOC_THRESHOLD_LINES} lines and needs a "## Contents" section near the top`);
+    }
     for (const [, ref] of text.matchAll(FILE_REF)) {
       const candidates = [join(dirname(file), ref), join(skillDir, ref)];
       if (!candidates.some((path) => existsSync(path))) report(`${rel} references missing file ${ref}`);
@@ -96,12 +101,16 @@ for (const name of names) {
 
   const lines = parsed.body.split("\n").length;
   if (lines > MAX_BODY_LINES) report(`SKILL.md body is ${lines} lines (max ${MAX_BODY_LINES})`);
+  const mirrored = name in mirror.skills;
   const tokens = Math.round(parsed.body.length / 4);
   if (tokens > BODY_TOKEN_BUDGET) {
-    warnings.push(`${name}: SKILL.md body is ~${tokens} tokens (spec recommends under ${BODY_TOKEN_BUDGET})`);
+    const message = `SKILL.md body is ~${tokens} tokens (budget ${BODY_TOKEN_BUDGET}); move detail into references/`;
+    // A mirrored skill can only be fixed at its source, so it must not block the sync.
+    if (mirrored) warnings.push(`${name}: ${message}`);
+    else report(message);
   }
 
-  if (name in mirror.skills) checkMirrored(name, skillDir, report);
+  if (mirrored) checkMirrored(name, skillDir, report);
   else checkFiles(name, skillDir, report);
 }
 

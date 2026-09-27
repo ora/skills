@@ -2,11 +2,14 @@
 
 Can an agent get credentials, get in, and operate the product end to end: call it, recover from errors, and not break on your next release? This is Ora's largest scored layer, because it answers the question that most decides whether an agent succeeds: can it **connect, authenticate, and operate** you. Most agent failures happen here. The product is discoverable and understood, but the agent cannot get past the front door, or it gets in and cannot drive the product reliably.
 
-The layer has three parts, covered in order below, plus the human handoff in `handoff.md`:
+The layer has three parts, covered in order below, plus the human handoff in `handoff.md`.
 
-1. **Authentication and access** - obtaining credentials and getting past the front door, with no human in the loop.
-2. **Operating the product** - the API, the MCP server, and the ergonomics an agent depends on to call you reliably.
-3. **Operating a web GUI directly** - when a step exists only in the browser, the accessibility tree an agent drives.
+## Contents
+
+1. **Authentication and access** - obtaining credentials and getting past the front door, with no human in the loop. Self-serve credentials, OAuth and scopes, machine-to-machine, agent-auth conventions, onboarding friction, auth anti-patterns.
+2. **Operating the product** - the API, the MCP server, and the ergonomics an agent depends on to call you reliably. A public API, MCP server, API ergonomics, SDKs and webhooks, REST vs GraphQL.
+3. **Operating a web GUI directly** - when a step exists only in the browser, the accessibility tree an agent drives. Accessibility tree, injection safety.
+4. **Payments** - a pointer to `payments.md`.
 
 ---
 
