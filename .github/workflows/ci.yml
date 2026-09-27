@@ -30,7 +30,7 @@ jobs:
           echo "$output"
           # Reduce each line to name characters so a skill line matches exactly
           # (agent-ready must not pass on the strength of agent-ready-website).
-          listed="$(sed 's/[^a-z0-9-]//g' <<<"$output")"
+          listed="$(sed -E 's/\x1b\[[0-9;?]*[A-Za-z]//g; s/[^a-z0-9-]//g' <<<"$output")"
           for dir in skills/*/; do
             name="$(basename "$dir")"
             grep -qx -- "$name" <<<"$listed" || { echo "::error::skills CLI did not discover $name"; exit 1; }
