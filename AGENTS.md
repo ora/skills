@@ -9,6 +9,7 @@ Rules for any coding agent (or person) changing this repo. Run `npm run validate
 - `mirror.json` - skills mirrored from ora.ai, with the sha256 digest each file must match.
 - `skills.sh.json` - how the skills.sh repo page groups skills. Add every new skill to a group.
 - `scripts/` - `validate.mjs` (the checks CI runs) and `sync.mjs` (the ora.ai mirror).
+- `evals/` - trigger and behaviour cases for `claude plugin eval`.
 
 ## Mirrored skills are read-only here
 
@@ -19,7 +20,9 @@ A skill listed in `mirror.json` is generated in Ora's product repo and published
 - **Spec.** Follow [agentskills.io](https://agentskills.io/specification): `name` is 1-64 lowercase letters, digits, and single hyphens; `description` is 1-1024 chars. Allowed frontmatter keys are `name`, `description`, `license`, `compatibility`, `metadata`, and `allowed-tools`.
 - **Strict YAML.** Frontmatter must parse with a real YAML engine. An unquoted `: ` inside a plain value (for example `When to use: ...`) breaks the parse, and strict clients like the skills CLI then drop the skill without an error. The validator catches this.
 - **Description.** Third person. Say what the skill does and when to use it, with the phrases a user would actually type. The description is the only text an agent sees before choosing a skill, so make it distinct from every sibling skill here and name the sibling to use instead when triggers overlap.
-- **Body.** Under 500 lines, ideally under 5000 tokens. Put detail in `references/` and point to it from `SKILL.md`. Assume the agent is capable; cut explanations it does not need.
+- **Body.** Under 500 lines and 5000 tokens; the validator fails a hand-written skill over either. Put detail in `references/` and point to it from `SKILL.md`. Assume the agent is capable; cut explanations it does not need.
+- **References.** Keep each file focused on one layer or task. A reference over 100 lines starts with a `## Contents` section, so an agent that previews the file sees its full scope.
+- **Evals.** Every skill has cases in `evals/`: at least one prompt where it must fire, and one near miss where it must not. A description change is a behaviour change, so run the suite (see `evals/README.md`) and compare before merging.
 - **Layer names.** Ora scores four layers, and the API returns these ids: `discovery`, `accessibility`, `usability`, `payments`. Skills that map checks to files must use these ids. If Ora changes its layers, update `agent-ready`'s references and the mapping in `references/verify-with-ora.md` in the same change.
 - **Do not copy the check catalog.** Hand-written skills teach durable patterns. The current per-check fixes come from Ora's API or from the mirrored `agent-ready-website`, so they cannot drift.
 - **Scripts.** Keep them small, validate every argument before it reaches a URL or request body, never require secrets, and call only Ora's public API. skills.sh audits them.
@@ -36,4 +39,5 @@ A skill listed in `mirror.json` is generated in Ora's product repo and published
 
 1. `npm run validate` passes.
 2. `npx skills add . --list` lists every skill directory.
-3. For a new skill: it is in `skills.sh.json` and the README table, and its description does not compete with an existing skill's triggers.
+3. For a new skill: it is in `skills.sh.json` and the README table, it has eval cases, and its description does not compete with an existing skill's triggers.
+4. For a description or instruction change: the eval suite ran and did not regress.

@@ -1,0 +1,1 @@
+We're adding a public REST API to our invoicing SaaS so customers' AI agents can create and list invoices on their behalf. Design the endpoints, auth, and error handling. Write the design as a markdown doc in docs/api-design.md; don't implement it yet.

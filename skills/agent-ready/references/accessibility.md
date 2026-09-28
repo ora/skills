@@ -2,6 +2,13 @@
 
 Can an agent reach your content, read it, and understand what you do and when to use you? Discovery gets the agent to your door. Accessibility decides whether it can get in and make sense of what it finds. The boundary with the next layer is simple: Accessibility is what agents can read, Usability is what agents can do.
 
+## Contents
+
+- Reach: do not block agent crawlers, serve content without JS
+- Describe: a consistent machine-readable description, structured data (JSON-LD), when-to-use guidance
+- Document: documentation depth, a machine-readable API description, machine-readable pricing
+- Advertise and prove: well-known and agent files, trust anchors
+
 ## Do not block agent crawlers
 
 Fetch your homepage under each major AI user agent and confirm a 200, not a 403, a 429, or a challenge page:

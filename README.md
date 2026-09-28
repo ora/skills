@@ -44,8 +44,9 @@ There are two kinds of skill here.
 
 ```bash
 npm install
-npm run validate                      # spec, links, style, and mirror integrity
+npm run validate                      # spec, size budgets, links, style, mirror integrity
 npx skills add . --list               # confirm the skills CLI discovers every skill
+claude plugin eval . --no-publish     # trigger and behaviour evals (see evals/README.md)
 ```
 
 Rules for writing and changing skills are in [AGENTS.md](AGENTS.md). Found a check result that looks wrong? Report it through Ora's `submit_check_feedback` MCP tool, or open an issue here.
