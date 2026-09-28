@@ -4,6 +4,10 @@
     "agent-ready-website": {
       "url": "https://ora.ai/.well-known/agent-skills/agent-ready-website/SKILL.md",
       "digest": "sha256:ba96de0c30c85f38b7b01d131182063aee62fa6873c265fe703a8ca61f5238db"
+    },
+    "ora": {
+      "url": "https://ora.ai/.well-known/agent-skills/ora/SKILL.md",
+      "digest": "sha256:e4ec65ec868130998d7f120f73a47281656575814fee2138aa97e34446438478"
     }
   }
 }
