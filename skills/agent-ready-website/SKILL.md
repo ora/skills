@@ -163,7 +163,7 @@ Grouped by scoring layer; tier groupings are advisory (see Step 3).
 
 **Emerging (excluded from the score):**
 
-- `agent-skills-index-v2` - Upgrade /.well-known/agent-skills/index.json to the v0.2.0 schema: add "$schema": "https://schemas.agentskills.io/discovery/0.2.0/schema.json", and give every entry a type (skill-md or archive), url, and digest. Use "digest": "sha256:<64 lowercase hex chars>" (e.g. "digest": "sha256:a3f1...") - a bare "sha256": "<hex>" field is also accepted. Compute the value from the artifact's raw bytes.
+- `agent-skills-index-v2` - Upgrade /.well-known/agent-skills/index.json to the v0.2.0 schema: add "$schema": "https://schemas.agentskills.io/discovery/0.2.0/schema.json", and give every entry a type (skill-md or archive), url, and digest. Use "digest": "sha256:<64 lowercase hex chars>" (e.g. "digest": "sha256:a3f1...") - a bare "sha256": "<hex>" field is also accepted. Compute the value from the artifact's raw bytes. For archives, hash the ZIP or tar.gz download itself; a separate skill-md entry is not required.
 - `skills-sh-listed` - Publish agent skills on skills.sh so AI agents can discover your product's capabilities. Create a SKILL.md in your GitHub repo and register it with 'npx skills add'. See skills.sh/docs.
 - `pricing-md` - Create a /pricing.md file with your pricing tiers, features, and limits in plain markdown. This lets AI agents compare costs and recommend plans without scraping HTML pricing pages.
 - `nlweb-schema-feeds` - Add a schemamap: directive to robots.txt pointing to a Schema Map XML file listing your structured data feeds (JSONL/RSS). See the NLWeb Schema Feeds spec.
