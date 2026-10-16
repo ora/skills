@@ -3,7 +3,7 @@
   "skills": {
     "agent-ready-website": {
       "url": "https://ora.ai/.well-known/agent-skills/agent-ready-website/SKILL.md",
-      "digest": "sha256:ba96de0c30c85f38b7b01d131182063aee62fa6873c265fe703a8ca61f5238db"
+      "digest": "sha256:90cd0186313e96a063f0efea5fc27113f6dfa52d6863784de6931c4f3dd5ff9c"
     },
     "ora": {
       "url": "https://ora.ai/.well-known/agent-skills/ora/SKILL.md",
