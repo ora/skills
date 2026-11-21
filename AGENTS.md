@@ -6,14 +6,17 @@ Rules for any coding agent (or person) changing this repo. Run `npm run validate
 
 - `skills/<name>/SKILL.md` - one directory per skill. The directory name equals the frontmatter `name`.
 - `skills/<name>/references/`, `assets/`, `scripts/` - loaded on demand. Keep references one level deep from `SKILL.md`.
-- `mirror.json` - skills mirrored from ora.ai, with the sha256 digest each file must match.
+- `mirror.json` - skills mirrored from ora.ai (`skills`) and from Ora products' doors (`products`), with the sha256 digest each file must match.
 - `skills.sh.json` - how the skills.sh repo page groups skills. Add every new skill to a group.
 - `scripts/` - `validate.mjs` (the checks CI runs) and `sync.mjs` (the ora.ai mirror).
 - `evals/` - trigger and behaviour cases for `claude plugin eval`.
 
 ## Mirrored skills are read-only here
 
-A skill listed in `mirror.json` is generated in Ora's product repo and published at `https://ora.ai/.well-known/agent-skills/`. Never edit it in this repo; the validator rejects any byte change. Change it at its source, deploy ora.ai, then run `npm run sync` (or wait for the daily sync PR). The sync refuses a file whose digest does not match the published index, or whose frontmatter is not strict YAML, and keeps the last good copy instead.
+A skill listed in `mirror.json` is written outside this repo, and the validator rejects any byte change to it here.
+
+- Under `skills`: generated in Ora's product repo and published at `https://ora.ai/.well-known/agent-skills/`. Change it at its source, deploy ora.ai, then run `npm run sync` (or wait for the daily sync PR). The sync refuses a file whose digest does not match the published index, or whose frontmatter is not strict YAML, and keeps the last good copy instead.
+- Under `products`: handed out by an Ora product at its own door (a list at the door's URL, each skill's files at `<door>/<name>`). Change it in Ora's product repository and deploy that product; the sync then writes every file as served and records its digest. A door that does not answer keeps the copy it handed out last, and a skill the door stops listing is removed. Its style findings warn here and are fixed at the source, which checks the same rules.
 
 ## Writing a skill
 
