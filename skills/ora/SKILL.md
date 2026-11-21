@@ -54,6 +54,28 @@ Full report: https://ora.ai/score/{domain}
 4. Only show failed checks (status = "fail") - skip passed/warning/error checks in the table.
 5. If there are no failed checks, say "All checks passed!" instead of the Failed Checks table.
 
+## Workflows
+
+Send a real agent at a site on a task, then read what it did. Each step names the exact call and why it comes next.
+
+### Run a journey
+
+1. `GET https://ora.ai/api/journey/intents` lists the curated tasks; pick one `id`. Curated tasks run without a key.
+2. `GET https://ora.ai/api/journey/agents` lists the agents; copy one agent's `harness` and `model` (the agent whose `id` is `cas-haiku` suits most sites).
+3. `POST https://ora.ai/api/journey/runs` with body `{"intent": {"intent_id": "{intent_id}", "domain": "{domain}"}, "harness": "{harness}", "model": "{model}"}` starts the agent and answers at once with the run `id` and a `next_action`.
+4. Send that `next_action`, a GET of the run's stream (a path on ora.ai), and hold it open to its `result` or `error` frame: only a stream followed to the end saves the result.
+5. When a response carries `next_action` with `wait_seconds`, wait that long and send the same request again; on any other refusal, send the request its `next_action` names, because that is the request that fixes it.
+
+Over MCP, `run_journey` with `{ "domain": "{domain}" }` picks a curated task and an agent, starts the run and follows it for up to 50 seconds; while the run is still going, make the `nextAction` call it returns. From a terminal, `npx ax deep-journey {domain}` does the same.
+
+### Read a journey result
+
+1. `GET https://ora.ai/api/journey/runs/{id}` reads the run: `result` is present once `status` is `succeeded`, and until then its `next_action` names the stream to follow.
+2. Read `verdict`: `satisfied`, `partial`, `unsatisfied` or `not_gradable`. It says whether the agent finished the task, or that the run could not be graded.
+3. Read `flags`: `blocked` (the site refused the agent) and `answered_from_memory` (half or more of the answer came from the model's memory, not from the site). Show the `reason` of any raised flag beside the verdict: a flag never changes the verdict, it says how much the verdict tells you about the site.
+4. Read `result.insight.summary`, then `result.insight.key_observations`: what the agent did and where it got stuck.
+5. `GET https://ora.ai/api/score/{domain}` returns the site's score report, which ranks what to fix (on a 404, scan it as in Scanning a Domain).
+
 ## Discovering Products
 
 When the user needs a product for a task:
