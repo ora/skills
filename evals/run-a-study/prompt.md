@@ -1,0 +1,1 @@
+We built an MCP server for our product docs. I want to prove that coding agents answer our customers' billing questions better with it than without it. Set up that comparison with Ora Study and tell me how many runs it would take before anything runs; don't launch it yet.

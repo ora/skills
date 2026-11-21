@@ -5,12 +5,23 @@
     {
       "title": "Build",
       "description": "Build products that agents can find, read, use, and pay.",
-      "skills": ["agent-ready"]
+      "skills": [
+        "agent-ready"
+      ]
     },
     {
       "title": "Measure and improve",
       "description": "Audit a live site with Ora and fix it one check at a time.",
-      "skills": ["agent-ready-website"]
+      "skills": [
+        "agent-ready-website"
+      ]
+    },
+    {
+      "title": "Benchmark agents",
+      "description": "Compare agents and their setups on your own tasks, gate changes on the result, and publish it, with Ora Study.",
+      "skills": [
+        "ora-study"
+      ]
     }
   ]
 }

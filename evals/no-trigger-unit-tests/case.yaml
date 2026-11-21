@@ -1,0 +1,4 @@
+runs: 3
+max_turns: 15
+timeout_seconds: 300
+tags: [negative]

@@ -16,5 +16,7 @@ Cases:
 - `mcp-handoff/` - `agent-ready` fires for an MCP server with a payment step, annotates tools, and hands the payment to a human through an MCP App.
 - `raise-score/` - raising a live site's Ora score routes to the audit loop: scan first, work `topFixes` in order, rescan.
 - `no-trigger-seo/` - a plain SEO request does not pull in agent-readiness work.
+- `run-a-study/` - `ora-study` fires for proving an MCP server's value, designs a two-group comparison and checks it with preflight before launching anything.
+- `no-trigger-unit-tests/` - a plain unit-testing request does not pull in an agent benchmark.
 
 When you change a skill's description or its core instructions, run the suite and compare against the previous result before merging.

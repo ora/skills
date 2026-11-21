@@ -31,3 +31,8 @@ export function parseSkill(content) {
 export function readMirror() {
   return JSON.parse(readFileSync(MIRROR_PATH, "utf8"));
 }
+
+/** Every skill mirrored from a product's door (`mirror.products`), by name: `{ version, files: { path: digest } }`. */
+export function productSkillsOf(mirror) {
+  return Object.fromEntries(Object.values(mirror.products ?? {}).flatMap((skills) => Object.entries(skills ?? {})));
+}
