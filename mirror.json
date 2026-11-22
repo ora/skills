@@ -3,19 +3,19 @@
   "skills": {
     "agent-ready-website": {
       "url": "https://ora.ai/.well-known/agent-skills/agent-ready-website/SKILL.md",
-      "digest": "sha256:ba96de0c30c85f38b7b01d131182063aee62fa6873c265fe703a8ca61f5238db"
+      "digest": "sha256:43380dfdaac9a7439ed79b932258039af69a4f44325b074acb26e24a3c172077"
     },
     "ora": {
       "url": "https://ora.ai/.well-known/agent-skills/ora/SKILL.md",
-      "digest": "sha256:e4ec65ec868130998d7f120f73a47281656575814fee2138aa97e34446438478"
+      "digest": "sha256:e1934e6a168683471151a9c1ccd61c6e86f136d3c6a1b0c09924f5db4d2f7f9a"
     }
   },
   "products": {
     "https://api.ora.ai/study/v1/agent-skills": {
       "ora-study": {
-        "version": "1.0.0",
+        "version": "1.0.1",
         "files": {
-          "SKILL.md": "sha256:6e7cabc770d6817db5f7cb184e4f3a7f443c559ea67ec1ae4bcc567b456b5f62",
+          "SKILL.md": "sha256:f6a2611581a25a9aa741589c7cf2852852c33712c5adb72b4bb06b43dd1f990b",
           "references/check-and-rehearse.md": "sha256:1f8842fe1f1411b5846e0bc851b58f454d30c30544550006e61365c4eb3b5404",
           "references/ci-gate.md": "sha256:274ec9eb98deff045e3adfc1766e2fc322cc8416a4490bb450fc5d553eb3c899",
           "references/design.md": "sha256:c29c6428130aaf7b6b69758b9cb15be83b67bea4c4f5b747c399add53c1c648e",

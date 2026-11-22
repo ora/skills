@@ -2,10 +2,10 @@
 name: ora-study
 description: Runs benchmark studies of AI agents with Ora Study and the ora CLI. It compares agents (Claude Code, Codex, OpenCode and others, each on a chosen model) and their setups (a skill, an MCP server, tools, add-ons) on the person's own tasks or a published benchmark, graded by a blind judge panel and deterministic checks, then reads, gates and publishes the results. Use when someone wants to prove that a skill or MCP server makes agents better, find which agent or model does their tasks best, rank agents on a benchmark, catch a change that makes agents worse in CI, or publish a study. To make a website or API itself agent-ready, use agent-ready or agent-ready-website instead.
 license: MIT
-compatibility: Requires the ora CLI (@ora-ai/cli) 0.29.0 or newer and an Ora Study API key. Install or update with npm install -g @ora-ai/cli
+compatibility: Requires the ora CLI (@ora-ai/cli) 0.30.0 or newer and an Ora Study API key. Install or update with npm install -g @ora-ai/cli
 metadata:
-  version: "1.0.0"
-  min-cli-version: "0.29.0"
+  version: "1.0.1"
+  min-cli-version: "0.30.0"
 ---
 
 # Ora Study playbook
