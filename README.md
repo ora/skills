@@ -18,7 +18,7 @@ npx skills add ora/skills -g -y                 # every project on this machine
 npx skills add ora/skills --list                # see what is in the repo
 ```
 
-Ora's own CLI installs a product's skills too, with no account needed for Study's: `npx @ora-ai/cli skills study add` (a CLI newer than 0.29.0).
+Ora's own CLI installs a product's skills too, with no account needed for Study's: `npx @ora-ai/cli skills study add` (CLI 0.30.0 or newer).
 
 ## Skills
 
