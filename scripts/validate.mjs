@@ -5,7 +5,7 @@
 
 import { existsSync, readFileSync, readdirSync, statSync } from "node:fs";
 import { dirname, join, relative } from "node:path";
-import { NAME_PATTERN, ROOT, SKILLS_DIR, parseSkill, readMirror, sha256 } from "./lib.mjs";
+import { NAME_PATTERN, ROOT, SKILLS_DIR, parseSkill, productSkillsOf, readMirror, sha256 } from "./lib.mjs";
 
 const ALLOWED_KEYS = new Set(["name", "description", "license", "compatibility", "metadata", "allowed-tools"]);
 const MAX_BODY_LINES = 500;
@@ -17,6 +17,7 @@ const FILE_REF = /`((?:references|assets|scripts)\/[\w./-]+|[\w-]+\.md)`/g;
 const errors = [];
 const warnings = [];
 const mirror = readMirror();
+const productSkills = productSkillsOf(mirror);
 
 function walk(dir) {
   return readdirSync(dir).flatMap((entry) => {
@@ -77,6 +78,25 @@ function checkMirrored(name, skillDir, report) {
   }
 }
 
+/**
+ * A skill mirrored from a product's door holds exactly the files sync.mjs wrote, byte for byte. Its source is the
+ * product's own repository, so a change is made there and arrives with the next sync.
+ */
+function checkProductMirrored(name, skillDir, report) {
+  const recorded = productSkills[name].files ?? {};
+  const files = walk(skillDir).map((path) => relative(skillDir, path)).sort();
+  const expected = Object.keys(recorded).sort();
+  if (JSON.stringify(files) !== JSON.stringify(expected)) {
+    report(`holds ${files.join(", ")} but its product door handed out ${expected.join(", ")}. Change it at its source, then run npm run sync`);
+    return;
+  }
+  for (const rel of files) {
+    if (sha256(readFileSync(join(skillDir, rel))) !== recorded[rel]) {
+      report(`${rel} differs from what its product door handed out (mirror.json). Change it at its source, then run npm run sync`);
+    }
+  }
+}
+
 const names = readdirSync(SKILLS_DIR, { withFileTypes: true })
   .filter((entry) => entry.isDirectory())
   .map((entry) => entry.name);
@@ -101,7 +121,7 @@ for (const name of names) {
 
   const lines = parsed.body.split("\n").length;
   if (lines > MAX_BODY_LINES) report(`SKILL.md body is ${lines} lines (max ${MAX_BODY_LINES})`);
-  const mirrored = name in mirror.skills;
+  const mirrored = name in mirror.skills || name in productSkills;
   const tokens = Math.round(parsed.body.length / 4);
   if (tokens > BODY_TOKEN_BUDGET) {
     const message = `SKILL.md body is ~${tokens} tokens (budget ${BODY_TOKEN_BUDGET}); move detail into references/`;
@@ -110,11 +130,15 @@ for (const name of names) {
     else report(message);
   }
 
-  if (mirrored) checkMirrored(name, skillDir, report);
+  if (name in productSkills) {
+    checkProductMirrored(name, skillDir, report);
+    // Its style is its source's to fix, so a finding here warns and never blocks the sync.
+    checkFiles(name, skillDir, (message) => warnings.push(`${name}: ${message}`));
+  } else if (mirrored) checkMirrored(name, skillDir, report);
   else checkFiles(name, skillDir, report);
 }
 
-for (const name of Object.keys(mirror.skills)) {
+for (const name of [...Object.keys(mirror.skills), ...Object.keys(productSkills)]) {
   if (!names.includes(name)) errors.push(`mirror.json lists ${name} but skills/${name}/ is missing`);
 }
 
