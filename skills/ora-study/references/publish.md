@@ -15,7 +15,8 @@
 - Re-run what infrastructure lost first (`ora study rerun-infra-failures <id> --dry-run`, see launch-and-wait.md):
   a published study must be unpublished before anything is re-run.
 - Read the exact public page: `ora study preview <id> --json` is the payload readers will get. Published tasks
-  reveal their rubrics and checks, so check those texts are fit to publish.
+  reveal their rubrics and checks, and their `files` (inline contents, and the addresses of downloads and
+  repositories), so check those texts are fit to publish.
 - Ask the person before publishing.
 
 ## Publishing
@@ -34,14 +35,15 @@ in the description. Measured values keep their values.
 
 - The names of MCP servers the study's add-ons attached, and the names of their tools: a reader sees each server as
   `mcp` and its tools as numbered aliases. Ora's own add-ons are published by name.
+- The names of the packages a group was given: the page says "preinstalled packages" and names none.
 - Organization ids, user ids, keys and secrets.
 - `taskHealth`, which is for the study's own maintainers.
 
 ## Private tasks
 
-A task with `"private": true` keeps its text, and the agents' journeys through it, off the open page. On a `public`
-study, signed-in readers of an organization that accepted Ora's data terms can still read it. To keep a task away from
-everyone outside your organization, publish the study as `link`.
+A task with `"private": true` keeps its text, its `files`, and the agents' journeys through it, off the open page. On
+a `public` study, signed-in readers of an organization that accepted Ora's data terms can still read it. To keep a
+task away from everyone outside your organization, publish the study as `link`.
 
 ## Re-publishing and correcting a page
 

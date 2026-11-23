@@ -3,28 +3,32 @@
   "skills": {
     "agent-ready-website": {
       "url": "https://ora.ai/.well-known/agent-skills/agent-ready-website/SKILL.md",
-      "digest": "sha256:43380dfdaac9a7439ed79b932258039af69a4f44325b074acb26e24a3c172077"
+      "digest": "sha256:49f13a161ebac73ab82fd4c1879d0d9f57e442875ec6e353505bdc0fae62982a"
     },
     "ora": {
       "url": "https://ora.ai/.well-known/agent-skills/ora/SKILL.md",
-      "digest": "sha256:e1934e6a168683471151a9c1ccd61c6e86f136d3c6a1b0c09924f5db4d2f7f9a"
+      "digest": "sha256:f2c44f75dc17c1fafb3494297873b18af9e55358bc26e46eb1e13be4b74c1ae8"
+    },
+    "ax": {
+      "url": "https://ora.ai/.well-known/agent-skills/ax/SKILL.md",
+      "digest": "sha256:3060b45cdcee528603a549b17b2ca976adc029c3f8df26a343f802596d6d61de"
     }
   },
   "products": {
     "https://api.ora.ai/study/v1/agent-skills": {
       "ora-study": {
-        "version": "1.0.1",
+        "version": "1.1.0",
         "files": {
-          "SKILL.md": "sha256:f6a2611581a25a9aa741589c7cf2852852c33712c5adb72b4bb06b43dd1f990b",
-          "references/check-and-rehearse.md": "sha256:1f8842fe1f1411b5846e0bc851b58f454d30c30544550006e61365c4eb3b5404",
+          "SKILL.md": "sha256:f993e38e03f933c3e6a7ebc69d690475465f9cf32225a9cdbd2d3f4c5c458513",
+          "references/check-and-rehearse.md": "sha256:2aa89024fd46b8eaf101ae51eb26ac9c251ad8dad50b3933230cbfbb3e98c2fb",
           "references/ci-gate.md": "sha256:274ec9eb98deff045e3adfc1766e2fc322cc8416a4490bb450fc5d553eb3c899",
-          "references/design.md": "sha256:c29c6428130aaf7b6b69758b9cb15be83b67bea4c4f5b747c399add53c1c648e",
+          "references/design.md": "sha256:da36248ed750b7b960d29acc4e66cc2fd0960b719a9e2c4e887e14ad0a4fcbaa",
           "references/launch-and-wait.md": "sha256:42d36f47764aaa1357eaf697909a79b90833e3d3859f5bc9cdbcd1bf6cc8cf85",
-          "references/publish.md": "sha256:3b695951057af3e6d799953cb4172b6771e82f92c9b33fde25d5def0e1ddced9",
-          "references/reading-results.md": "sha256:480b182ef6418bfeea964e632dcce5226ef154650dda1fc88ecfa1f78f6c5b03",
-          "references/tasks-and-grading.md": "sha256:83333c862662323e2adbcbdb4674618365c1142539081f743faf4713854cf27f",
+          "references/publish.md": "sha256:b532f068a957829ddfe4caf113fbdb2991ada9f1cdfce44070e23ecb580a83c5",
+          "references/reading-results.md": "sha256:a467ec075b3507f784d11938c88bd2511808761ae90f8a42781ae8bdf6126981",
+          "references/tasks-and-grading.md": "sha256:22f6ece94688d09dbf3fe4e805ba4f6f158be6895a3ee48ea3541dd44934616e",
           "references/test-awareness.md": "sha256:6ae9cdf8e686f016e0330db6e8ba0ced3b0b6df9b16bca9dcaf3f78b59479c8b",
-          "references/troubleshooting.md": "sha256:a53545d738778a8f1970487cdb5202801c1c1e9a19d327556c0b6962b14001b5"
+          "references/troubleshooting.md": "sha256:f1901f61406ec7bf0fc0ac4edde0d27319591b87b2393f99e6138b6d53a4cffc"
         }
       }
     }

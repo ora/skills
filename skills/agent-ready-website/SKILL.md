@@ -25,10 +25,10 @@ Two ways to use it:
 Prefer the ax CLI when a shell is available (zero install, no account):
 
 ```bash
-npx ax@0.10 audit https://<your-site> --json > /tmp/ora-audit-1.json
+npx ax@0.12 audit https://<your-site> --json > /tmp/ora-audit-1.json
 ```
 
-The `@0.10` pin matches this playbook to the CLI release line it
+The `@0.12` pin matches this playbook to the CLI release line it
 documents. If npx reports no matching version, the CLI for this playbook is
 not published yet - use the MCP or REST path below instead of an older CLI.
 
@@ -55,7 +55,7 @@ audit a publicly reachable deployment of the same code (e.g. a preview
 deployment). To audit localhost itself, bring your own tunnel:
 
 ```bash
-npx ax@0.10 audit localhost:3000 --tunnel-cmd 'ngrok http 3000 --log stdout'
+npx ax@0.12 audit localhost:3000 --tunnel-cmd 'ngrok http 3000 --log stdout'
 ```
 
 Any tunnel tool works - pass a command that exposes the local server and
@@ -286,7 +286,7 @@ When the target is reached, pin it in CI so it never regresses:
 
 ```yaml
 - name: Agent-readiness gate
-  run: npx ax@0.10 audit https://<your-site> --min-score 70
+  run: npx ax@0.12 audit https://<your-site> --min-score 70
 ```
 
 Exit codes: 0 pass, 1 below threshold, 2 usage error, 3 API error. The
