@@ -4,7 +4,7 @@ description: Runs benchmark studies of AI agents with Ora Study and the ora CLI.
 license: MIT
 compatibility: Requires the ora CLI (@ora-ai/cli) 0.30.0 or newer and an Ora Study API key. Install or update with npm install -g @ora-ai/cli
 metadata:
-  version: "1.0.1"
+  version: "1.1.0"
   min-cli-version: "0.30.0"
 ---
 
@@ -32,7 +32,8 @@ Ask the person, in one short message:
 - what is compared: agents against each other, or one setup against another (with and without a skill, two MCP
   servers, a tool on or off);
 - the claim, in one sentence: "With our docs MCP server, agents answer billing questions correctly more often";
-- the tasks: their own prompts, each with what a correct answer must contain, or a published benchmark;
+- the tasks: their own prompts, each with what a correct answer must contain and any files or repository it works
+  in, or a published benchmark;
 - the agents, and how many runs they are willing to spend.
 
 The number of groups decides the form:
@@ -52,6 +53,10 @@ The number of groups decides the form:
 - Each group is a `--group` flag: its label, then what sets it apart. A group with nothing after its label runs the
   agents as published.
 - Each task is a `--task` flag: its prompt, or `@task.json` for a task with its rubric and checks.
+- A command-line tool a group should already have is the `packages` add-on: installed before the agent starts, at no
+  cost to the agent, and never announced to it (see design.md).
+- The files, downloads and git repositories a task needs in the agent's workspace are that task's `files` (see
+  tasks-and-grading.md).
 - Grade with `--lenses judge` (a blind judge panel against each task's rubric), and add `evals` for deterministic
   checks.
 
@@ -70,6 +75,11 @@ A group whose add-on or skill never reached the agent still finishes its runs, s
 the wrong thing. `ora study ci rehearse --file study.json` runs one task per group as a small study of its own and
 answers ready (exit 0), not ready (1), still pending (2) or could not start (3), with each group's checks. Fix a
 group that is not ready before the real study.
+
+It rehearses one agent per group. A setup attaches per agent, so when the study runs several agents add
+`--agents all`: every agent of each group runs, each a counted run, and a group is ready only when every agent used
+its setup. The flag is newer than CLI 0.30.0: `ora study ci rehearse --help` lists `--agents` when your CLI has it.
+[references/check-and-rehearse.md](references/check-and-rehearse.md) says what to do when it does not.
 
 ## 5. Launch and wait
 

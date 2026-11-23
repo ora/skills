@@ -5,6 +5,7 @@
 - The body
 - Groups
 - Setups: add-ons, skills, MCP servers, tools
+- Preinstalled packages
 - Agents: one set for every group, or each group its own
 - A whole body, as flags and as a file
 
@@ -63,10 +64,59 @@ lists the add-ons a harness can run and what each takes.
   written into the body.
 - **Tools** (`"tools": "default" | "none" | {"tools": [...]}`) apply to model-API agents only: a harness brings its own
   tools, so two groups that differ only in `tools` on a harness-only study are refused.
+- **Web tools off** is the `web-access` add-on: `"web-access": { "mode": "off" }` switches off the agent's own web
+  search and page fetch on Claude Code, Codex and the desktop apps. Use it, not `tools`, to compare a harness agent
+  with and without its web tools. It does not block the network: an agent that can run a command can still reach the
+  web that way. So every run of that group is checked for web use, a run that reached the web is labelled "Reached
+  the web", and the report's "Web tools off" section counts those runs per group. Never describe such a group as
+  offline. `"mode": "hosts"` with a `hosts` list holds a desktop app to those hosts; Claude Code and Codex refuse it.
+- **A command-line tool or a library** the group should already have is the `packages` add-on (next section).
 - A group may carry several add-ons and skills at once.
 
 Every tool of an attached MCP server can be called. When a study must not write anything, say so in the prompt and
 add a `tool_not_called` check for each tool that writes, so a run that called one is flagged.
+
+## Preinstalled packages
+
+A study that compares "the agent with our CLI" with "the agent as published" needs the CLI to be there, the way it is
+on a developer's machine. The `packages` add-on installs exact-pinned public packages into a group's runs before the
+agent starts and puts their commands on its PATH. The install is setup: it costs the agent no time, tokens or turns,
+and nothing tells the agent the tool is there. Whether the agent finds and uses it is what the study observes.
+
+```json
+"packages": { "packages": [{ "manager": "pip", "name": "cloudinary-cli", "version": "1.18.0", "commands": "cld" }] }
+```
+
+| Field | Rule |
+| --- | --- |
+| `manager` | `pip` (PyPI) or `npm` |
+| `name` | The package's name in its registry. A name only: no version, no extras, no URL |
+| `version` | One exact version. A range, a specifier (`>=`, `~=`, `^`, `*`) or a tag such as `latest` is refused |
+| `commands` | Optional. The command names the package puts on PATH, separated by spaces: `cloudinary-cli` provides `cld` |
+| `integrity` | Optional. Verified at install: an npm SRI hash (`sha512-...`) or a pip digest (`sha256:...`) |
+
+- **Name `commands` for every package that provides one.** The study reads "did the agent use the package" from
+  those names. With them it can say the agent did not use the package. Without them it tries the package's own name
+  and can only say that the agent did: when nothing ran, the answer is "not measured", never "not used".
+- One entry lists 1 to 8 packages, from either manager. The add-on can be attached more than once
+  (`packages#cli`, `packages#lint`), each with its own list. A run takes at most 16 installs in all, counting what
+  other add-ons install.
+- The same package twice in one list is refused at create. Two entries that install it at different versions are
+  refused at launch (`addon_conflict`).
+- The order of a list means nothing: two groups whose lists differ only in order are the same setup, and two groups
+  with the same setup are refused.
+- It is offered only on agents proven to install from that manager and run the result.
+  `ora study addons list --harness <harness> --surface run` lists `packages` for those. Create refuses a group whose
+  package needs a manager one of its agents is not proven for, naming the agent and the manager.
+- Public packages only. It runs no setup script and writes no config file. A credential the tool needs rides the
+  `secrets` add-on with `exposeToShell: true`, so the tool can read it.
+- The prompt is the same for every group, so do not use it to tell the agent about the tool.
+- Set `integrity` on a pip package only when it has no dependencies: once one package carries a hash, pip wants one
+  for every dependency too.
+
+Rehearse the group before the study (see check-and-rehearse.md). To report how often the agent used the tool, add a
+check scoped to the group: `{ "kind": "command_ran", "label": "used cld", "pattern": "(^|[\\s;&|(])cld\\s", "arms": ["cli"] }`.
+The Study app's builder can fill this add-on in too.
 
 ## Agents: one set for every group, or each group its own
 

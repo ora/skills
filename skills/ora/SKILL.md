@@ -66,7 +66,9 @@ Send a real agent at a site on a task, then read what it did. Each step names th
 4. Send that `next_action`, a GET of the run's stream (a path on ora.ai), and hold it open to its `result` or `error` frame: only a stream followed to the end saves the result.
 5. When a response carries `next_action` with `wait_seconds`, wait that long and send the same request again; on any other refusal, send the request its `next_action` names, because that is the request that fixes it.
 
-Over MCP, `run_journey` with `{ "domain": "{domain}" }` picks a curated task and an agent, starts the run and follows it for up to 50 seconds; while the run is still going, make the `nextAction` call it returns. From a terminal, `npx ax deep-journey {domain}` does the same.
+Over MCP, `run_journey` with `{ "domain": "{domain}" }` picks a curated task and an agent, starts the run and follows it for up to 50 seconds; while the run is still going, make the `nextAction` call it returns. From a terminal, `npx ax@0.12 journey --domain {domain}` does the same.
+
+To see where a site loses agents, run a set of journeys: `npx ax@0.12 journey "{goal}" --domain {domain} --agents claude-code,codex --levels --repeat 5 --watch` sends the goal to each agent at several levels of help, repeats every run, and ora grades and counts the runs while `--watch` follows them live. The report shows the level at which agents start to succeed. A set runs in the user's organization on ora Study: the user signs in once with `npx ax@0.12 login`, or CI sets `ORA_API_KEY` to a platform key with the `ax.sets:write` and `ax.sets:read` scopes. The `ax` skill covers the preview to show the user before launching, the report and the limits.
 
 ### Read a journey result
 

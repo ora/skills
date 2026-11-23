@@ -43,7 +43,8 @@ The study is read in the Study app too, at the study's own page.
 - `ora study run-trajectory <id> <runId> --json`: the steps the agent took, with each tool call and its answer.
 - `ora study run-spans <id> <runId> --json`: the stored model and tool calls with their usage; `--categories tool,error`
   narrows them.
-- `ora study run-delivered <id> <runId> --json`: the files and images the run delivered.
+- `ora study run-delivered <id> <runId> --json`: the files and images the run delivered. Of a task's own `files`,
+  only those the agent changed are listed.
 - `ora study run-screens <id> <runId> --json`: the screens' verdicts on the run, with their quoted evidence.
 
 ## Asking the runs a question
@@ -53,6 +54,14 @@ The study is read in the Study app too, at the study's own page.
 The answer describes the matched runs (shares, means, medians, totals, each with the number of runs it stands on). It
 is not the study's estimate, which weighs every task equally: for a claim, read `aggregate` or `ora study gate`.
 `ora study save-view <id> --file view.json` keeps a question; `ora study views <id>` lists them.
+
+To compare groups on how many turns their runs took, ask for `turns` (the median over the runs) and `turns_total`
+(their total): `{ "metrics": ["runs", "turns", "turns_total"], "groupBy": ["group"] }`. A turn is a model call that got
+a response, counted the same way for every agent; where the calls were not measured, the count is read from the run's
+trace. Both figures stand on the runs that ended and carry a turn count: a run with none is left out of the figure
+and of its `n`, never counted as 0. Turns describe these runs and nothing more. They are not in the study's
+comparison table (`aggregate`), so a difference in turns between two groups has no interval, and no claim, gate or
+summary reads it.
 
 ## Behaviors and screens
 
