@@ -23,7 +23,9 @@
   panel split on most. For the study's maintainers; it is never published.
 - `warnings`: findings that limit what the readout can measure, recomputed on every read.
 
-The study is read in the Study app too, at the study's own page.
+The full report is the study's own page in the Study app: every task, run and result, laid out for a reader.
+`study.links.report` is its address, open once `study.reportOpen` is true. End what you tell the person with that
+link. `study.links.manage` is the page the study is managed from.
 
 ## What a comparison may claim
 

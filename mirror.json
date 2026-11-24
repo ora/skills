@@ -17,15 +17,15 @@
   "products": {
     "https://api.ora.ai/study/v1/agent-skills": {
       "ora-study": {
-        "version": "1.1.0",
+        "version": "1.2.0",
         "files": {
-          "SKILL.md": "sha256:f993e38e03f933c3e6a7ebc69d690475465f9cf32225a9cdbd2d3f4c5c458513",
+          "SKILL.md": "sha256:dc6b8a6eaaf5a0567bf01233907887149bf6f9120b9984d4740512e41c7496d9",
           "references/check-and-rehearse.md": "sha256:2aa89024fd46b8eaf101ae51eb26ac9c251ad8dad50b3933230cbfbb3e98c2fb",
-          "references/ci-gate.md": "sha256:274ec9eb98deff045e3adfc1766e2fc322cc8416a4490bb450fc5d553eb3c899",
+          "references/ci-gate.md": "sha256:ed7aa6818b1e50c64945ba0ba03cd1e1deb403d657a761a44315b9ac0397a4b0",
           "references/design.md": "sha256:da36248ed750b7b960d29acc4e66cc2fd0960b719a9e2c4e887e14ad0a4fcbaa",
-          "references/launch-and-wait.md": "sha256:42d36f47764aaa1357eaf697909a79b90833e3d3859f5bc9cdbcd1bf6cc8cf85",
-          "references/publish.md": "sha256:b532f068a957829ddfe4caf113fbdb2991ada9f1cdfce44070e23ecb580a83c5",
-          "references/reading-results.md": "sha256:a467ec075b3507f784d11938c88bd2511808761ae90f8a42781ae8bdf6126981",
+          "references/launch-and-wait.md": "sha256:dad157349c91193443c6c09d6e93627aa0b809984e5e960f7b91bd83434abc6a",
+          "references/publish.md": "sha256:490c64aa740d4c53d8a2f3a838872e7a77676d0979b398ad295b22352e42abf8",
+          "references/reading-results.md": "sha256:b92309dcf72fe071687dff740503ad086c634531727a6907d301499c2bb960eb",
           "references/tasks-and-grading.md": "sha256:8ee97174fa248fa5db49ee3bf6aafe817823e8a5d7178fcec789ec88137315e3",
           "references/test-awareness.md": "sha256:6ae9cdf8e686f016e0330db6e8ba0ced3b0b6df9b16bca9dcaf3f78b59479c8b",
           "references/troubleshooting.md": "sha256:c39253698215d425ffdd97ad46dd196aae965b827a66e6995b3a6457517f48a3"

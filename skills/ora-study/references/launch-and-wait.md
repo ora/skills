@@ -3,6 +3,7 @@
 ## Contents
 
 - One command, or step by step
+- The report link
 - The launch record
 - When the numbers are final
 - Re-running what infrastructure lost
@@ -18,6 +19,30 @@ running), 3 on an error. `--param name=value` fills a `${name}` placeholder of t
 
 Step by step: `ora study create` (a study with authored tasks is `ready`), `ora study launch <id>` (`--watch` follows
 it), then `ora study get <id> --json` or `ora study stream <id>` to follow it.
+
+## The report link
+
+Every answer that carries a study (create, launch, get, publish, a visibility change) states where it opens:
+
+- `study.links.manage`: the page the study is managed from, for a signed-in member of its organization. Stated
+  from the start.
+- `study.links.report`: the study's full report, at the study's own address. Stated from launch: while the study is
+  preparing or running, the report will open there when it completes. `study.reportOpen` says whether it is open
+  yet.
+
+A study with no report to speak of states no `links.report`: one that has not launched, one that failed, and a
+rehearsal. Read the answer, not the status: when the link is absent, promise no report.
+
+Everyone in the study's organization can open the report once it is open, with no publishing; who else can is the
+study's `visibility` (see publish.md). The report link never carries a share token.
+
+The link is the study's current address. It changes only if the study is published under a different slug
+(`ora study publish --slug`), and the earlier link then stops opening (see publish.md).
+
+Give the person the report link when you launch, and again with the results. Before the study completes, say that
+it opens when the study completes. A CLI newer than 0.30.0 ends `ora study launch`, `run`, `get` and `publish` with
+the link on a line of its own: `Report: <url>`, or `Report (opens when the study completes): <url>` until then. With
+`--json` the line is not printed and the link is read from the answer.
 
 ## The launch record
 

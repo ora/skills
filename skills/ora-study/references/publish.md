@@ -25,6 +25,15 @@
 unlisted, opened only through the share link in the answer. `--visibility` is required on a first publication.
 `--slug <slug>` names its URL (lowercase letters, digits and hyphens); without it the study keeps its own.
 
+A different slug moves the study. Its report link has been stated since launch (`study.links.report`), and every
+copy of the earlier one stops opening: the one you gave the person, and any their organization shared. Pass `--slug`
+only when the person asks for a different address, then hand over the new `study.links.report` from the publish
+answer and say the earlier link no longer opens.
+
+Without `--slug`, the published page is the study's report at the same address as before publishing:
+`study.links.report`. That link carries no share token. For an unlisted study, the link an outside reader needs is
+`shareUrl` in the publish answer, which does; hand that one only to the readers the person chose.
+
 `--skill-names named` shows each group's skills by name on the page; `withheld` (the default, and what every publish
 that does not say otherwise sets) replaces them with an alias everywhere a reader can see, including the text you wrote
 in the description. Measured values keep their values.
