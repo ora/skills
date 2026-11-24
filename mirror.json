@@ -26,9 +26,9 @@
           "references/launch-and-wait.md": "sha256:42d36f47764aaa1357eaf697909a79b90833e3d3859f5bc9cdbcd1bf6cc8cf85",
           "references/publish.md": "sha256:b532f068a957829ddfe4caf113fbdb2991ada9f1cdfce44070e23ecb580a83c5",
           "references/reading-results.md": "sha256:a467ec075b3507f784d11938c88bd2511808761ae90f8a42781ae8bdf6126981",
-          "references/tasks-and-grading.md": "sha256:22f6ece94688d09dbf3fe4e805ba4f6f158be6895a3ee48ea3541dd44934616e",
+          "references/tasks-and-grading.md": "sha256:8ee97174fa248fa5db49ee3bf6aafe817823e8a5d7178fcec789ec88137315e3",
           "references/test-awareness.md": "sha256:6ae9cdf8e686f016e0330db6e8ba0ced3b0b6df9b16bca9dcaf3f78b59479c8b",
-          "references/troubleshooting.md": "sha256:f1901f61406ec7bf0fc0ac4edde0d27319591b87b2393f99e6138b6d53a4cffc"
+          "references/troubleshooting.md": "sha256:c39253698215d425ffdd97ad46dd196aae965b827a66e6995b3a6457517f48a3"
         }
       }
     }
