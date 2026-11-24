@@ -4,7 +4,7 @@ description: Runs benchmark studies of AI agents with Ora Study and the ora CLI.
 license: MIT
 compatibility: Requires the ora CLI (@ora-ai/cli) 0.30.0 or newer and an Ora Study API key. Install or update with npm install -g @ora-ai/cli
 metadata:
-  version: "1.1.0"
+  version: "1.2.0"
   min-cli-version: "0.30.0"
 ---
 
@@ -87,6 +87,12 @@ its setup. The flag is newer than CLI 0.30.0: `ora study ci rehearse --help` lis
   the study (exit 0; 2 when `--timeout` ran out first, while the study keeps running; 3 on an error).
 - Or step by step: `ora study create`, `ora study launch <id>`, then `ora study settlement <id>` until it says
   `settled`.
+- From launch, every answer about the study states `study.links.report`, the address of its full report, beside
+  `study.links.manage`, the page it is managed from. Give the person the report link as soon as the study is
+  launched: the report opens there when the study completes (`study.reportOpen` turns true), for everyone in their
+  organization, with no publishing. Before launch, and for a study that failed, no report link is stated: promise
+  none. The link is in the answer whatever your CLI version; a CLI newer than 0.30.0 also ends `launch`, `run`, `get`
+  and `publish` with it on a line of its own.
 - Runs that Ora's own infrastructure lost are re-run in place: `ora study rerun-infra-failures <id> --dry-run` shows
   them, the same command without `--dry-run` re-runs them. Never cancel a run to redo it.
 - [references/launch-and-wait.md](references/launch-and-wait.md) covers pacing, adding agents and stopping.
@@ -100,8 +106,8 @@ its setup. The flag is newer than CLI 0.30.0: `ora study ci rehearse --help` lis
 3. `runs`: each run's group, agent, outcome and grades. Open one with `ora study run-trajectory <id> <runId>`.
 
 [references/reading-results.md](references/reading-results.md) explains the readout, what a comparison may claim,
-and asking the runs a question. Tell the person the result in the numbers the study returned, with the study link,
-and say what it does not show.
+and asking the runs a question. Tell the person the result in the numbers the study returned, and say what it does
+not show. End with the link to the full report (`study.links.report`): it is the page they will open and pass on.
 
 ## 7. Hold back test-aware runs (optional)
 
@@ -128,4 +134,10 @@ rubrics. [references/publish.md](references/publish.md) covers what stays privat
 - Every run spends the person's plan. Check with preflight first, rehearse before a large study, and never launch in
   a loop.
 - Ask before launching, publishing, or changing anything the person has already published.
+- Finish by handing over the report link, exactly as the answer gave it in `study.links.report`. Never build an
+  address yourself. `shareUrl` is a different link: it carries an unlisted study's share token, so it goes only to
+  the outside readers the person chose.
+- Publish without `--slug` unless the person asks for a different address. A different slug moves the study: the
+  report link you handed over stops opening. If they do ask, hand over the new `study.links.report` from the
+  publish answer and say the earlier link no longer opens.
 - A refusal names its code: [references/troubleshooting.md](references/troubleshooting.md) says what each means.

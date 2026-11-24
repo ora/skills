@@ -43,6 +43,11 @@ launch, the wait, one in-place re-run of infrastructure failures, the settle wai
 2 undecided, 3 error. `${name}` in any string of the body is filled by `--param name=value`; an unfilled placeholder
 and an unused parameter are both errors. The key needs `study.studies:read` and `study.studies:write`.
 
+`--summary-file <path>` (default: `$GITHUB_STEP_SUMMARY` when set) and `--comment-file <path>` take the gate's report
+in markdown. With a CLI newer than 0.30.0 it leads with the link to the study's full report and gives the management
+page second, both as the API states them (`study.links`), and the command's last line is the report link. Pass
+`--app-url <origin>` only when your people open the Study app at another origin than the one the API states.
+
 ## Running only what could have changed
 
 A series study created with `"carry": { "from": "series", "maxAgeDays": 7 }` takes the runs of its unchanged jobs
