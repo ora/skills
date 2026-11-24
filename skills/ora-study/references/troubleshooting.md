@@ -22,7 +22,7 @@
 | `... names no cells while group ... does` | Give every group `cells`, or none |
 | `every group runs the same agents` | Send those agents as `matrix` instead of `cells` |
 | 422 `LENS_REQUIREMENT_UNMET` | A task lacks what a lens needs: 2 to 8 rubric criteria for `judge`, `expectations` for `evals` |
-| 422 `study_matrix_invalid` | An agent that is not in the catalog, a harness that cannot run tasks with steps, or an agent with no workspace of its own (a model API agent, a desktop app) on a task that declares `files` |
+| 422 `study_matrix_invalid` | An agent that is not in the catalog, a harness that cannot run tasks with steps, or an agent not proven to work where a task's files are put (the refusal names it) on a task that declares `files` |
 | 422 naming `tasks[i].files` | A task file the rules refuse (see tasks-and-grading.md): a `ref` that is a branch or a tag, an empty inline file, a download address with a user name, a password or a query string, a file named AGENTS.md, CLAUDE.md or CONVENTIONS.md at the workspace root, a path under a dot entry of the root, an entry with two sources or none, a path twice, or a size or count over its limit |
 | 422 `study_pacing_invalid` | A pacing value below the number of groups that run one agent |
 | 422 `run_screen_unsupported` | A screen this deployment does not run |

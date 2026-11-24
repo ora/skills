@@ -90,8 +90,9 @@ entry has a `path` and exactly one source:
 | One downloaded file | 25 MiB |
 | A task's downloads together | 100 MiB |
 
-- Only an agent that runs in a workspace of its own can be given files. Create refuses a matrix with an agent that
-  has none (a model API agent, a desktop app) with `study_matrix_invalid`, naming it.
+- Only an agent proven to work where the files are put can be given them. Create and `ora study preflight` refuse a
+  matrix with any other agent (one that works elsewhere in its workspace, a model API agent, a desktop app) with
+  `study_matrix_invalid`, naming it.
 - Files are frozen at create: `ora study update-task` does not change them.
 - A run's delivered files (`ora study run-delivered`) are the ones the agent created or changed. A file it was given
   and never touched is not listed as its work.
