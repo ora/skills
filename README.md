@@ -26,6 +26,7 @@ Ora's own CLI installs a product's skills too, with no account needed for Study'
 | --- | --- |
 | [`agent-ready`](skills/agent-ready/SKILL.md) | You are building or changing a surface agents will use: an API, auth, an MCP server or MCP App, `llms.txt`, docs, pricing, or checkout. |
 | [`agent-ready-website`](skills/agent-ready-website/SKILL.md) | You want to raise a live website's Ora score. It runs an audit, applies the top-ranked fix, and re-audits. |
+| [`improve-agent-markdown`](skills/improve-agent-markdown/SKILL.md) | Your site is on Ora Front and you want agents to get better answers from it. It measures with real agents in Ora Studio, proposes sourced edits to the Markdown agents read, publishes the ones you approve, and measures again. |
 | [`ora-study`](skills/ora-study/SKILL.md) | You want to prove that a skill, MCP server or tool makes agents better, find which agent or model does your tasks best, or gate a change on an agent benchmark, with Ora Study. |
 
 `agent-ready` holds the durable build patterns, with a reference file per scoring layer and templates for `llms.txt`, `robots.txt`, OpenAPI, an MCP server card, and an MCP App tool. `agent-ready-website` carries the current fix for every Ora check, generated from Ora's live check registry.
@@ -40,7 +41,7 @@ Ora's own CLI installs a product's skills too, with no account needed for Study'
 
 There are three kinds of skill here.
 
-- **Written here.** `agent-ready` is authored in this repo. Edit it directly and open a pull request.
+- **Written here.** `agent-ready` and `improve-agent-markdown` are authored in this repo. Edit them directly and open a pull request.
 - **Mirrored from ora.ai.** `agent-ready-website` is generated from Ora's check registry and published at [`ora.ai/.well-known/agent-skills/`](https://ora.ai/.well-known/agent-skills/index.json). A daily workflow copies it here after checking each file against its published sha256 digest, and CI rejects edits made in this repo. The same skills install straight from the site with `npx skills add https://ora.ai`.
 - **Mirrored from an Ora product.** `ora-study` is written in Ora's product repository, next to the CLI and API it drives, and handed out by Study at [`api.ora.ai/study/v1/agent-skills`](https://api.ora.ai/study/v1/agent-skills). The same daily workflow copies every file of it here and records each file's sha256 in `mirror.json`, and CI rejects edits made in this repo.
 

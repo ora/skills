@@ -17,6 +17,8 @@ Cases:
 - `raise-score/` - raising a live site's Ora score routes to the audit loop: scan first, work `topFixes` in order, rescan.
 - `no-trigger-seo/` - a plain SEO request does not pull in agent-readiness work.
 - `run-a-study/` - `ora-study` fires for proving an MCP server's value, designs a two-group comparison and checks it with preflight before launching anything.
+- `fix-agent-markdown/` - `improve-agent-markdown` fires for improving a site's content for agents, reads what agents get and measures a fresh baseline before suggesting any edit, keeps one change per card, and publishes each only with an explicit yes, saying it changes what every agent gets.
+- `no-trigger-llms-txt/` - writing an llms.txt for an open-source repository (no website, no Ora Front) does not pull in `improve-agent-markdown`.
 - `no-trigger-unit-tests/` - a plain unit-testing request does not pull in an agent benchmark.
 
 When you change a skill's description or its core instructions, run the suite and compare against the previous result before merging.

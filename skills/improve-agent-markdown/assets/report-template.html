@@ -1,0 +1,271 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><title>Agent Markdown report</title><meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%2232%22%20height%3D%2232%22%20viewBox%3D%220%200%2032%2032%22%20fill%3D%22none%22%3E%3Crect%20width%3D%2232%22%20height%3D%2232%22%20fill%3D%22%230A0A0B%22/%3E%3Ccircle%20cx%3D%2216%22%20cy%3D%2216%22%20r%3D%228.5%22%20fill%3D%22none%22%20stroke%3D%22%23EDEDEF%22%20stroke-width%3D%224.5%22/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{color-scheme:dark;--bg:#0A0A0B;--bg-subtle:#0E0E10;--surface:#121214;--surface-2:#1A1A1D;--border:#26262A;--border-strong:#3A3A41;--text:#EDEDEF;--text-muted:#8A8A93;--text-subtle:#6E6E77;--text-faint:#45454C;--mark-text:#0A0A0B;--mark:#8A8A93;--accent:#F0D8B6;--accent-dim:#A8916F;--acc:#F0D8B6;--good:#34D399;--worse:#F87171;--warn:#FBBF24;--font-sans:"Inter",system-ui,-apple-system,"Segoe UI",Helvetica,Arial,sans-serif;--font-mono:"JetBrains Mono",ui-monospace,"SF Mono",Menlo,Monaco,monospace}
+*{box-sizing:border-box}html{scroll-behavior:smooth;background:var(--bg)}::selection{background:rgba(240,216,182,.25)}
+body{margin:0;padding-left:186px;color:var(--text);font-family:var(--font-sans);font-size:16px;line-height:1.55;-webkit-font-smoothing:antialiased;background-color:var(--bg);background-image:radial-gradient(circle,rgba(237,237,239,.04) 1px,transparent 1.5px);background-size:26px 26px}
+.wrap{max-width:940px;margin:0 auto;padding:0 28px}
+h1,h2,h3{font-weight:600;letter-spacing:-.02em;margin:0;text-wrap:balance}a{color:inherit}
+.eyebrow,.fignote,.statnote,.legend,.sidenav,.lockup,.hbval,.xc,.vtag,.ansn,.tldr>summary,.dbval,.axis{font-feature-settings:"zero" 1,"ss01" 1}
+.eyebrow{font-family:var(--font-mono);font-size:11px;text-transform:uppercase;letter-spacing:.3em;color:var(--text-muted);margin:0 0 12px}
+.sidebar{position:fixed;top:0;left:0;width:186px;height:100vh;border-right:1px solid var(--border);background:var(--bg);padding:26px 24px;display:flex;flex-direction:column;z-index:10}
+.lockup{display:flex;align-items:baseline;gap:8px;margin-bottom:34px}.lockup .ring{width:16px;height:16px;flex:none;align-self:center}
+.lockup .wm{font-family:var(--font-mono);font-size:13px;letter-spacing:.3em}
+.lockkick{font-family:var(--font-mono);font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:var(--text-subtle)}
+.sidenav{font-family:var(--font-mono);font-size:11px;text-transform:uppercase;letter-spacing:.14em;color:var(--text-subtle);display:flex;flex-direction:column;gap:12px}
+.sidenav a{text-decoration:none;display:flex;align-items:center;gap:10px;transition:color .3s}
+.sidenav a::before{content:"";display:block;width:18px;height:2px;border-radius:1px;background:var(--border-strong);flex:none;transition:width .3s,background .3s,box-shadow .3s}
+.sidenav a:hover{color:var(--text)}.sidenav a.active{color:var(--text)}
+.sidenav a.active::before{width:30px;background:var(--acc);box-shadow:0 0 10px rgba(240,216,182,.7)}
+@media(max-width:820px){body{padding-left:0}.sidebar{position:static;width:100%;height:auto;flex-direction:row;align-items:center;border-right:none;border-bottom:1px solid var(--border);padding:12px 20px}.lockup{margin-bottom:0}.lockkick,.sidenav a::before{display:none}.sidenav{flex-direction:row;flex-wrap:wrap;gap:14px;margin-left:22px}}
+.hero{padding:72px 0 48px;border-bottom:1px solid var(--border)}
+.hero h1{font-size:clamp(2.2rem,4.6vw,3.6rem);line-height:1.05;margin:0 0 22px}
+.hero .lede{font-size:18px;color:var(--text-muted);max-width:80ch;margin:0}.hero .lede b{color:var(--text);font-weight:500}
+.tldr{margin:22px 0 0;border:1px solid var(--border);border-radius:.9rem;background:var(--surface);overflow:hidden}
+.tldr>summary{list-style:none;cursor:pointer;padding:12px 16px;font-family:var(--font-mono);font-size:11px;text-transform:uppercase;letter-spacing:.14em;color:var(--text-muted);display:flex;justify-content:space-between;align-items:center}
+.tldr>summary::-webkit-details-marker{display:none}.tldr>summary:hover{color:var(--text)}
+.chev{color:var(--text-faint);transition:transform .15s}details[open]>summary .chev{transform:rotate(90deg)}
+.tldrlist{margin:0;padding:22px 0 0;display:flex;flex-direction:column;gap:10px;list-style:none}
+.tldrlist li{font-size:15.5px;color:var(--text-muted);line-height:1.5;position:relative;padding-left:16px}
+.tldrlist li::before,.blist li::before{content:"";position:absolute;left:1px;top:9px;width:5px;height:5px;border-radius:1px;background:var(--accent)}
+.tldrlist li b,.blist li b{color:var(--text);font-weight:600}
+.blist{margin:16px 0 0;padding:0;display:flex;flex-direction:column;gap:9px;list-style:none;max-width:82ch}
+.blist li{font-size:14.5px;color:var(--text-muted);line-height:1.5;position:relative;padding-left:16px}.blist li::before{top:8px}
+code{font-family:var(--font-mono);font-size:.86em;color:var(--text)}
+section{padding:44px 0;border-bottom:1px solid var(--border)}section.band{background:var(--bg-subtle)}
+h2{font-size:26px;margin-bottom:8px}
+.sub{color:var(--text-muted);max-width:80ch;margin:0 0 22px;font-size:16.5px}
+.note{font-size:14px;color:var(--text-muted);border-left:2px solid var(--border-strong);padding:2px 0 2px 16px;margin:0 0 22px;max-width:82ch}.note b{color:var(--text);font-weight:500}
+.card{border:1px solid var(--border);border-radius:.9rem;background:var(--surface);padding:18px 20px 14px}
+.cgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:6px 0 4px}.wide{grid-column:1 / -1}
+@media(max-width:900px){.cgrid{grid-template-columns:1fr}}
+.cchead{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}
+.fignote{font-family:var(--font-mono);font-size:10.5px;text-transform:uppercase;letter-spacing:.09em;color:var(--text-subtle);margin:0 0 10px}
+.statnote{font-family:var(--font-mono);font-size:10.5px;color:var(--text-subtle);margin:10px 0 0}
+.legend{display:flex;flex-wrap:wrap;gap:16px;font-family:var(--font-mono);font-size:11px;color:var(--text-muted);margin:2px 0 12px}
+.legend .sw{display:inline-block;width:12px;height:9px;border-radius:2px;margin-right:6px;vertical-align:middle}
+.hb{display:flex;align-items:center;gap:12px;margin:7px 0}
+.hblab{width:92px;flex:none;font-size:14px;color:var(--text-muted)}
+.hbtrack{flex:1;height:11px;background:var(--surface-2)}.hbfill{display:block;height:100%}
+.hbval{font-family:var(--font-mono);font-size:13px;width:96px;text-align:right;flex:none}
+.vtag{font-family:var(--font-mono);font-size:9.5px;text-transform:uppercase;letter-spacing:.06em;border-radius:4px;padding:2px 6px;color:var(--mark-text);white-space:nowrap}
+.vtag.gain{background:var(--good)}.vtag.loss{background:var(--worse)}.vtag.noise,.vtag.same{background:var(--surface-2);color:var(--text-muted);border:1px solid var(--border-strong)}.vtag.kind{background:transparent;color:var(--acc);border:1px solid rgba(240,216,182,.45)}
+.dim{color:var(--text-subtle)}
+/* by criterion: two dots joined by a bar */
+.axis{display:flex;justify-content:space-between;margin:0 116px 4px 252px;font-family:var(--font-mono);font-size:10px;color:var(--text-faint)}
+.db{border-top:1px solid var(--border)}.db>summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:12px;padding:9px 0}.db>summary::-webkit-details-marker{display:none}
+.db>summary:hover .dblab{color:var(--text)}
+.dblab{width:240px;flex:none;font-size:14px;color:var(--text-muted)}
+.dbtrack{flex:1;position:relative;height:22px;background:linear-gradient(90deg,transparent calc(25% - .5px),var(--border) 25%,transparent calc(25% + .5px),transparent calc(50% - .5px),var(--border) 50%,transparent calc(50% + .5px),transparent calc(75% - .5px),var(--border) 75%,transparent calc(75% + .5px))}
+.dbbar{position:absolute;top:10px;height:2px}.dbdot{position:absolute;top:5px;width:12px;height:12px;margin-left:-6px;border-radius:50%}
+.dbval{width:104px;flex:none;text-align:right;font-family:var(--font-mono);font-size:12.5px}
+.dbbody{padding:0 0 12px 252px;font-size:13.5px;color:var(--text-muted)}
+/* edits */
+.edit h3{font-size:16px;margin:0 0 6px}.edit p{margin:0 0 8px;color:var(--text-muted);font-size:14.5px}
+.edit pre{white-space:pre-wrap;word-break:break-word;font-family:var(--font-mono);font-size:12px;color:var(--text-muted);background:var(--surface-2);border-radius:.6rem;padding:10px 12px;margin:6px 0 10px}
+.fold>summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:8px}.fold>summary::-webkit-details-marker{display:none}.fold>summary .fignote{margin:0}
+.quote{font-size:14.5px;color:var(--text-muted);margin:8px 0 0}.quote i{color:var(--text)}
+/* answers */
+.ansbar{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 14px;align-items:center}
+.ansbar select{font:inherit;font-family:var(--font-mono);font-size:11px;text-transform:uppercase;letter-spacing:.12em;color:var(--text);background:var(--surface);border:1px solid var(--border-strong);border-radius:999px;padding:6px 12px}
+.ansn{font-family:var(--font-mono);font-size:11px;color:var(--text-subtle);margin-left:auto}
+.anslist{border:1px solid var(--border);border-radius:.9rem;background:var(--surface);max-height:560px;overflow:auto}
+.ansrow{border-bottom:1px solid var(--border)}.ansrow:last-child{border-bottom:none}
+.ansrow>summary{list-style:none;cursor:pointer;display:grid;grid-template-columns:90px 52px minmax(90px,160px) 1fr auto;gap:12px;align-items:center;padding:9px 14px}.ansrow>summary::-webkit-details-marker{display:none}.ansrow>summary:hover{background:var(--surface-2)}
+.xc{font-family:var(--font-mono);font-size:11.5px;color:var(--text-muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ansbody{padding:2px 14px 14px;font-size:13px;color:var(--text-muted)}.ansbody .blist li{font-size:13px}
+svg{display:block;width:100%;height:auto;overflow:visible}
+@media(max-width:600px){.wrap{padding:0 16px}.hero{padding:44px 0 28px}.hblab{width:72px;font-size:13px}.hbval{width:84px;font-size:12px}.dblab{width:120px;font-size:13px}.dbval{width:64px}.axis{margin:0 76px 4px 132px}.dbbody{padding-left:0}.ansrow>summary{grid-template-columns:70px 40px 1fr auto}.ansrow>summary .xq{display:none}}
+@media(prefers-reduced-motion:reduce){.sidenav a,.sidenav a::before{transition:none}}
+</style></head><body>
+<!-- =====================================================================
+  improve-agent-markdown · report template
+  Rules: references/report.md. Fill ONLY the JSON in <script id="report-data"> below; the page draws
+  itself from it. Every number comes from the saved results (results-<n>/). Advice only in "next".
+  Text fields are plain text, and **bold** is the only markup they take.
+  Write the JSON with a serializer and every "<" as \u003c, or a "</script>" in an answer breaks the page.
+===================================================================== -->
+<div class="sidebar">
+  <div class="lockup"><svg class="ring" viewBox="0 0 32 32" fill="none" aria-hidden="true"><circle cx="16" cy="16" r="8.5" fill="none" stroke="#EDEDEF" stroke-width="4.5"/></svg><span class="wm">ora</span><span class="lockkick">front</span></div>
+  <nav class="sidenav" id="nav"></nav>
+</div>
+<header class="hero"><div class="wrap" id="hero"></div></header>
+<main id="main"></main>
+
+<script id="report-data" type="application/json">
+{
+  "site": "{example.com}",
+  "month": "{Month Year}",
+  "status": { "state": "draft", "date": "{2026-11-25}" },
+  "title": "{What AI agents get from example.com, before and after the Markdown edits}",
+  "lede": "{We asked **4 agents 3 questions** about example.com on 2026-11-20 and again on 2026-11-25, 12 runs each time, before and after 2 edits to the Markdown agents read.}",
+  "keyFindings": [
+    { "lead": "{Outcome, with the number before and after.}", "clause": "{one short clause}" }
+  ],
+  "layer": { "name": "{access}", "text": "{The number that shows it. Delete this object when the layer is not clear.}" },
+  "measurements": [
+    { "label": "Before", "date": "2026-11-20", "id": "{measurementId}" },
+    { "label": "After", "date": "2026-11-25", "id": "{measurementId}" }
+  ],
+  "overview": {
+    "sub": "{One sentence that states the finding of the plots below.}",
+    "measures": [
+      { "name": "{Answer score}", "better": "higher", "values": [ { "value": 41, "max": 100, "runs": 12 }, { "value": 58, "max": 100, "runs": 12 } ], "note": "" },
+      { "name": "{Answers that give the Growth retention}", "better": "higher", "values": [ { "n": 5, "of": 12 }, { "n": 10, "of": 12 } ], "note": "{of the 12 answers, 3 prompts by 4 agents}" }
+    ]
+  },
+  "criteria": [
+    { "label": "{States Growth retention}", "statement": "{The answer says the Growth plan keeps raw events for 25 months.}", "before": { "n": 5, "of": 12 }, "after": { "n": 10, "of": 12 } }
+  ],
+  "criteriaNote": "{of the 12 answers per criterion}",
+  "edits": [
+    { "id": "C2", "page": "/docs/retention", "date": "2026-11-25", "kind": "restructure", "what": "{Carried the plan table from the live page into the Markdown.}", "finding": "{7 of 12 answers gave no retention period for the Growth plan}", "criterion": "{States Growth retention}", "status": "live", "reason": "", "before": "{## Retention by plan\n\nLoading...}", "after": "{## Retention by plan\n\n| Plan | Raw events |\n...}", "revert": "ora front pages agent-version delete example.com L2RvY3MvcmV0ZW50aW9u" }
+  ],
+  "unchanged": {
+    "sub": "{One sentence: what holds before and after the edits.}",
+    "items": [ { "lead": "{Finding about the site, with its number.}", "text": "{evidence}", "quote": { "text": "", "agent": "", "prompt": "" } } ]
+  },
+  "next": [
+    { "action": "{Show the retention table in the page's HTML, not only through its script.}", "why": "{Agents served the HTML page missed it: 2 of 6 ChatGPT answers gave the retention period.}", "where": "{/docs/retention, on the live site}" }
+  ],
+  "agents": [],
+  "answers": [
+    { "measurement": "Before", "prompt": "P1", "agent": "{agent · model}", "quote": "{a short verbatim line from the answer}", "criteria": [ { "label": "{States Growth retention}", "result": "not_met", "reason": "{the judge's reason}" } ] }
+  ],
+  "method": {
+    "bullets": [ { "lead": "Runs.", "text": "{12 runs per measurement: 3 prompts by 4 agents, one run each.}" }, { "lead": "Noise.", "text": "One run per prompt per agent, so a move of one or two runs is within noise." } ],
+    "prompts": [ { "id": "P1", "intent": "{intent title}", "text": "{the prompt as sent}", "tag": "{easy}" } ],
+    "criteria": [ { "label": "{States Growth retention}", "statement": "{...}", "fact": "{The Growth plan keeps raw events for 25 months.}", "source": "{https://example.com/docs/retention}", "quote": "{Growth: raw events are kept for 25 months}" } ],
+    "frozen": "{2026-11-20}"
+  }
+}
+</script>
+
+<script>
+(function(){
+var D=JSON.parse(document.getElementById('report-data').textContent);
+function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];});}
+function md(s){return esc(s).replace(/\*\*(.+?)\*\*/g,'<b>$1</b>');}
+function pct(v){if(!v)return null;if(v.of)return 100*v.n/v.of;if(v.max)return 100*v.value/v.max;return null;}
+function val(v){if(!v)return'n/a';if(v.of)return Math.round(100*v.n/v.of)+'% · '+v.n+'/'+v.of;return String(v.value)+(v.max&&v.max!==100?' / '+v.max:'');}
+// a move of one or two runs is within noise. A score is tagged only with its runs: one run moves it by at most max/runs
+function tag(a,b,better){if(!a||!b)return'';var d;
+  if(a.of&&b.of){d=Math.round((b.n/b.of-a.n/a.of)*b.of);if(d===0)return'<span class="vtag same">no change</span>';if(Math.abs(d)<=2)return'<span class="vtag noise">within noise</span>';}
+  else{d=(b.value-a.value);if(d===0)return'<span class="vtag same">no change</span>';var r=Math.min(a.runs||0,b.runs||0);if(!r)return'';if(Math.abs(d)<=2*(b.max||100)/r)return'<span class="vtag noise">within noise</span>';}
+  var up=d>0;if(better==='lower')up=!up;return up?'<span class="vtag gain">gain</span>':'<span class="vtag loss">loss</span>';}
+var M=D.measurements||[],last=M.length-1,nav=[],out='';
+function col(i){return i===last?'var(--accent)':'var(--accent-dim)';}
+function legend(){return '<div class="legend">'+M.map(function(m,i){return'<span><span class="sw" style="background:'+col(i)+(i<last&&i>0?';opacity:.6':'')+'"></span>'+esc(m.label)+' · '+esc(m.date)+'</span>';}).join('')+'</div>';}
+
+// hero
+var st=D.status||{},fin=st.state==='final';
+var h='<p class="eyebrow">'+esc(D.site)+' · Agent Markdown · '+esc(D.month)+(st.state?' <span class="vtag '+(fin?'gain':'noise')+'">'+(fin?'final':'draft')+(st.date?' · '+esc(st.date):'')+'</span>':'')+'</p><h1>'+md(D.title)+'</h1><p class="lede">'+md(D.lede)+'</p>';
+h+='<ul class="tldrlist">'+(D.keyFindings||[]).map(function(k){return'<li><b>'+md(k.lead)+'</b> '+md(k.clause)+'</li>';}).join('')+'</ul>';
+var me=D.method||{};
+h+='<details class="tldr"><summary>Method · runs, agents, prompts, criteria<span class="chev">›</span></summary><div style="padding:4px 18px 18px">';
+h+='<ul class="blist">'+(me.bullets||[]).map(function(b){return'<li><b>'+md(b.lead)+'</b> '+md(b.text)+'</li>';}).join('');
+h+='<li><b>Measurements.</b> '+M.map(function(m){return esc(m.label)+' on '+esc(m.date)+(m.id?' <span class="dim">('+esc(m.id)+')</span>':'');}).join(', ')+'.'+(me.frozen?' Prompts and criteria frozen on '+esc(me.frozen)+'.':'')+'</li></ul>';
+if((me.prompts||[]).length)h+='<p class="fignote" style="margin-top:18px">Prompts, as sent</p><ul class="blist" style="margin:0">'+me.prompts.map(function(p){return'<li><b>'+esc(p.id)+'</b> <span class="dim">'+esc(p.intent)+(p.tag?' · '+esc(p.tag):'')+'</span><br>'+esc(p.text)+'</li>';}).join('')+'</ul>';
+if((me.criteria||[]).length)h+='<p class="fignote" style="margin-top:18px">Criteria and the facts behind them</p><ul class="blist" style="margin:0">'+me.criteria.map(function(c){return'<li><b>'+esc(c.label)+'.</b> '+esc(c.statement)+(c.fact?'<br><span class="dim">Fact: '+esc(c.fact)+' Source: '+esc(c.source)+(c.quote?', "'+esc(c.quote)+'"':'')+'</span>':'')+'</li>';}).join('')+'</ul>';
+var live=(D.edits||[]).filter(function(e){return e.status!=='reverted'&&e.revert;});
+if(live.length)h+='<p class="fignote" style="margin-top:18px">Undo a live edit</p><ul class="blist" style="margin:0">'+live.map(function(e){return'<li><b>'+esc(e.page)+'</b> <code>'+esc(e.revert)+'</code></li>';}).join('')+'</ul>';
+h+='</div></details>';
+document.getElementById('hero').innerHTML=h;
+
+// overview: one card per measure, then the by-criterion plot
+var ov=D.overview||{};
+if((ov.measures||[]).length){nav.push(['overview','Overview']);
+ out+='<section id="overview"><div class="wrap"><h2>Overview</h2><p class="sub">'+md(ov.sub)+'</p>';
+ if(D.layer&&D.layer.name)out+='<p class="note"><b>Layer: '+esc(D.layer.name)+'.</b> '+md(D.layer.text)+'</p>';
+ out+=legend()+'<div class="cgrid">'+ov.measures.map(function(m){var v=m.values||[];
+  return'<div class="card"><div class="cchead"><p class="fignote">'+esc(m.name)+' · '+(m.better==='lower'?'lower':'higher')+' is better</p>'+tag(v[0],v[v.length-1],m.better)+'</div>'+
+  v.map(function(x,i){var p=pct(x);return'<div class="hb"><span class="hblab">'+esc((M[i]||{}).label)+'</span><span class="hbtrack"><i class="hbfill" style="width:'+(p||0).toFixed(1)+'%;background:'+col(i)+(i<last&&i>0?';opacity:.6':'')+'"></i></span><span class="hbval">'+esc(val(x))+'</span></div>';}).join('')+
+  (m.note?'<p class="statnote">'+esc(m.note)+'</p>':'')+'</div>';}).join('')+'</div>';
+ // over time: only after more than one loop
+ if(M.length>2)out+=overTime(ov.measures);
+ if((D.criteria||[]).length){
+  var cr=D.criteria.slice().sort(function(a,b){return(pct(b.after)-pct(b.before))-(pct(a.after)-pct(a.before));});
+  out+='<div class="card wide" style="margin-top:12px"><p class="fignote">Answers that meet each criterion · '+esc(M[0]&&M[0].label)+' and '+esc(M[last]&&M[last].label)+'</p>';
+  out+='<div class="legend"><span><span class="sw" style="background:var(--accent-dim);border-radius:50%;width:9px"></span>'+esc(M[0]&&M[0].label)+'</span><span><span class="sw" style="background:var(--accent);border-radius:50%;width:9px"></span>'+esc(M[last]&&M[last].label)+'</span><span><span class="sw" style="background:var(--worse);border-radius:50%;width:9px"></span>'+esc(M[last]&&M[last].label)+', lower</span></div>';
+  out+='<div class="axis"><span>0%</span><span>25%</span><span>50%</span><span>75%</span><span>100%</span></div>';
+  out+=cr.map(function(c){var a=pct(c.before)||0,b=pct(c.after)||0,lo=Math.min(a,b),w=Math.abs(b-a),down=b<a;
+   return'<details class="db"><summary><span class="dblab">'+esc(c.label)+'</span><span class="dbtrack"><i class="dbbar" style="left:'+lo+'%;width:'+w+'%;background:'+(down?'var(--worse)':'var(--accent-dim)')+'"></i><i class="dbdot" style="left:'+a+'%;background:var(--accent-dim)"></i><i class="dbdot" style="left:'+b+'%;background:'+(down?'var(--worse)':'var(--accent)')+'"></i></span><span class="dbval">'+(c.after?c.after.n+'/'+c.after.of:'')+' <span class="dim">from '+(c.before?c.before.n:'')+'</span></span></summary><div class="dbbody">'+esc(c.statement)+' '+tag(c.before,c.after)+'</div></details>';}).join('');
+  if(D.criteriaNote)out+='<p class="statnote">'+esc(D.criteriaNote)+'</p>';
+  out+='</div>';}
+ out+='</div></section>';}
+
+function overTime(ms){var W=860,H=220,L=40,R=20,T=14,B=30,cols=['var(--accent)','var(--good)','var(--mark)','var(--warn)','#8AB4F8','var(--worse)'];
+ var t=M.map(function(m){return Date.parse(m.date);}),t0=Math.min.apply(null,t),t1=Math.max.apply(null,t)||t0+1;
+ function x(d){return L+(W-L-R)*((d-t0)/((t1-t0)||1));}function y(p){return T+(H-T-B)*(1-p/100);}
+ var s='<div class="card wide" style="margin-top:12px"><p class="fignote">Over time · each measurement</p><div class="legend">'+ms.map(function(m,i){return'<span><span class="sw" style="background:'+cols[i%cols.length]+'"></span>'+esc(m.name)+'</span>';}).join('')+'<span>dashed line = an edit published</span></div><svg viewBox="0 0 '+W+' '+H+'" role="img" aria-label="Measures over time">';
+ [0,50,100].forEach(function(p){s+='<line x1="'+L+'" x2="'+(W-R)+'" y1="'+y(p)+'" y2="'+y(p)+'" stroke="var(--border)"/><text x="'+(L-8)+'" y="'+(y(p)+4)+'" text-anchor="end" font-size="11" fill="var(--text-faint)" font-family="var(--font-mono)">'+p+'%</text>';});
+ (D.edits||[]).forEach(function(e){var d=Date.parse(e.date);if(isNaN(d))return;var X=x(d);s+='<line x1="'+X+'" x2="'+X+'" y1="'+T+'" y2="'+(H-B)+'" stroke="var(--text-faint)" stroke-dasharray="3 4"/><text x="'+(X+4)+'" y="'+(T+10)+'" font-size="10.5" fill="var(--text-subtle)" font-family="var(--font-mono)">'+esc(e.id)+'</text>';});
+ M.forEach(function(m,i){s+='<text x="'+x(t[i])+'" y="'+(H-8)+'" text-anchor="middle" font-size="11" fill="var(--text-subtle)" font-family="var(--font-mono)">'+esc(m.label)+'</text>';});
+ ms.forEach(function(m,j){var pts=(m.values||[]).map(function(v,i){var p=pct(v);return p==null?null:[x(t[i]),y(p)];}).filter(Boolean);var c=cols[j%cols.length];
+  s+='<polyline fill="none" stroke="'+c+'" stroke-width="2" points="'+pts.map(function(p){return p.join(',');}).join(' ')+'"/>'+pts.map(function(p){return'<circle cx="'+p[0]+'" cy="'+p[1]+'" r="3.5" fill="'+c+'"/>';}).join('');});
+ return s+'</svg></div>';}
+
+// edits
+if((D.edits||[]).length){nav.push(['edits','Edits']);
+ out+='<section id="edits" class="band"><div class="wrap"><h2>What changed</h2><p class="sub">'+D.edits.length+' edit'+(D.edits.length>1?'s':'')+' to the Markdown agents read, each from an approved change.</p><div class="cgrid">';
+ out+=D.edits.map(function(e){var c=(D.criteria||[]).filter(function(x){return x.label===e.criterion;})[0];
+  var moved=e.status==='reverted'?'<span class="vtag loss">reverted</span>':(c?tag(c.before,c.after):'');
+  return'<div class="card edit wide"><div class="cchead"><p class="fignote">'+esc(e.id)+' · '+esc(e.page)+' · '+esc(e.date)+'</p><span><span class="vtag kind">'+esc(e.kind)+'</span> '+moved+'</span></div><h3>'+md(e.what)+'</h3>'+
+  '<p>Answers the finding: '+md(e.finding)+(c?'. Criterion "'+esc(c.label)+'": '+c.before.n+' of '+c.before.of+' before, '+c.after.n+' of '+c.after.of+' after.':'')+'</p>'+
+  (e.status==='reverted'&&e.reason?'<p>Reverted: '+md(e.reason)+'</p>':'')+
+  (e.before||e.after?'<details class="fold"><summary><span class="chev">›</span><p class="fignote">The Markdown, before and after</p></summary><p class="fignote" style="margin-top:10px">Before</p><pre>'+esc(e.before)+'</pre><p class="fignote">After</p><pre>'+esc(e.after)+'</pre></details>':'')+'</div>';}).join('');
+ out+='</div></div></section>';}
+
+// what the edits did not change
+var un=D.unchanged||{};
+if((un.items||[]).length){nav.push(['unchanged','Not changed']);
+ out+='<section id="unchanged"><div class="wrap"><h2>What did not change</h2><p class="sub">'+md(un.sub)+'</p><div class="cgrid">';
+ out+=un.items.map(function(u){var q=u.quote&&u.quote.text?'<p class="quote"><i>"'+esc(u.quote.text)+'"</i> <span class="dim">'+esc(u.quote.agent)+(u.quote.prompt?', on '+esc(u.quote.prompt):'')+'</span></p>':'';
+  return'<div class="card wide"><ul class="blist" style="margin:0"><li><b>'+md(u.lead)+'</b> '+md(u.text)+'</li></ul>'+q+'</div>';}).join('');
+ out+='</div></div></section>';}
+
+// what to do next: the only place for advice
+var NX=D.next||[];
+if(NX.length){nav.push(['next','Next']);
+ out+='<section id="next" class="band"><div class="wrap"><h2>What to do next</h2><p class="sub">Recommendations from these results. Each one answers a finding above; the decision is yours.</p><div class="cgrid">';
+ out+=NX.map(function(n,i){return'<div class="card wide"><p class="fignote">'+(i+1)+(n.where?' · '+esc(n.where):'')+'</p><ul class="blist" style="margin:0"><li><b>'+md(n.action)+'</b> '+md(n.why)+'</li></ul></div>';}).join('');
+ out+='</div></div></section>';}
+
+// agents (optional): measures by agent, before and after
+if((D.agents||[]).length){nav.push(['agents','Agents']);
+ out+='<section id="agents" class="band"><div class="wrap"><h2>Agents</h2><p class="sub">'+md(D.agentsSub||'')+'</p>'+legend()+'<div class="cgrid">';
+ out+=D.agents.map(function(a){return'<div class="card"><div class="cchead"><p class="fignote">'+esc(a.agent)+' · '+esc(a.measure)+'</p>'+tag(a.values[0],a.values[a.values.length-1])+'</div>'+a.values.map(function(x,i){return'<div class="hb"><span class="hblab">'+esc((M[i]||{}).label)+'</span><span class="hbtrack"><i class="hbfill" style="width:'+(pct(x)||0).toFixed(1)+'%;background:'+col(i)+'"></i></span><span class="hbval">'+esc(val(x))+'</span></div>';}).join('')+'</div>';}).join('');
+ out+='</div></div></section>';}
+
+// every answer
+var A=D.answers||[];
+if(A.length){nav.push(['answers','Answers']);
+ function uniq(k){return A.map(function(a){return a[k];}).filter(function(v,i,s){return s.indexOf(v)===i;});}
+ function sel(k,label){return'<select data-k="'+k+'"><option value="">'+label+': all</option>'+uniq(k).map(function(v){return'<option>'+esc(v)+'</option>';}).join('')+'</select>';}
+ out+='<section id="answers"><div class="wrap"><h2>All '+A.length+' answers</h2><p class="sub">Filter and open any answer for what the agent said and how each criterion was judged.</p>';
+ out+='<div class="ansbar">'+sel('measurement','Measurement')+sel('prompt','Prompt')+sel('agent','Agent')+'<span class="ansn" id="ansn"></span></div><div class="anslist" id="anslist">';
+ out+=A.map(function(a,i){var cs=a.criteria||[],met=cs.filter(function(c){return c.result==='met';}).length,all=cs.filter(function(c){return c.result!=='not_applicable';}).length;
+  var cls=met===all?'gain':(met===0?'loss':'noise');
+  return'<details class="ansrow" data-i="'+i+'"><summary><span class="xc">'+esc(a.measurement)+'</span><span class="xc">'+esc(a.prompt)+'</span><span class="xc">'+esc(a.agent)+'</span><span class="xc xq">'+esc(a.quote)+'</span><span class="vtag '+cls+'">'+met+' of '+all+' met</span></summary><div class="ansbody">'+(a.quote?'<p class="quote"><i>"'+esc(a.quote)+'"</i></p>':'')+
+  '<ul class="blist">'+cs.map(function(c){return'<li><b>'+esc(c.label)+': '+esc(String(c.result).replace(/_/g,' '))+'.</b> '+esc(c.reason)+'</li>';}).join('')+'</ul></div></details>';}).join('');
+ out+='</div></div></section>';}
+
+document.getElementById('main').innerHTML=out;
+document.title=(D.site||'')+' · Agent Markdown report';
+document.getElementById('nav').innerHTML=nav.map(function(n){return'<a href="#'+n[0]+'">'+esc(n[1])+'</a>';}).join('');
+
+// answer filters
+var bar=document.querySelector('.ansbar');
+if(bar){function apply(){var f={};[].forEach.call(bar.querySelectorAll('select'),function(s){if(s.value)f[s.dataset.k]=s.value;});var n=0;
+ [].forEach.call(document.querySelectorAll('.ansrow'),function(r){var a=A[+r.dataset.i],ok=Object.keys(f).every(function(k){return String(a[k])===f[k];});r.style.display=ok?'':'none';if(ok)n++;});
+ document.getElementById('ansn').textContent=n+' of '+A.length;}
+ bar.addEventListener('change',apply);apply();}
+
+// sidebar: highlight the section in view
+var links=[].slice.call(document.querySelectorAll('.sidenav a')),secs=links.map(function(a){return document.querySelector(a.getAttribute('href'));});
+function upd(){var y=window.scrollY+140,cur=0;secs.forEach(function(s,i){if(s&&s.offsetTop<=y)cur=i;});links.forEach(function(a,i){a.classList.toggle('active',i===cur);});}
+window.addEventListener('scroll',upd,{passive:true});upd();
+})();
+</script>
+</body></html>
