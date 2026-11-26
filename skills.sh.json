@@ -11,9 +11,10 @@
     },
     {
       "title": "Measure and improve",
-      "description": "Audit a live site with Ora and fix it one check at a time.",
+      "description": "Audit a live site with Ora and fix it one check at a time, or improve the Markdown agents read and measure the result.",
       "skills": [
-        "agent-ready-website"
+        "agent-ready-website",
+        "improve-agent-markdown"
       ]
     },
     {
