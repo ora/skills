@@ -3,7 +3,7 @@
   "skills": {
     "agent-ready-website": {
       "url": "https://ora.ai/.well-known/agent-skills/agent-ready-website/SKILL.md",
-      "digest": "sha256:49f13a161ebac73ab82fd4c1879d0d9f57e442875ec6e353505bdc0fae62982a"
+      "digest": "sha256:d50681b56bae09fb4a0d4818c54ec897814de04e114a2fe69bd13e267b792c46"
     },
     "ora": {
       "url": "https://ora.ai/.well-known/agent-skills/ora/SKILL.md",
@@ -17,18 +17,18 @@
   "products": {
     "https://api.ora.ai/study/v1/agent-skills": {
       "ora-study": {
-        "version": "1.2.0",
+        "version": "1.6.0",
         "files": {
-          "SKILL.md": "sha256:dc6b8a6eaaf5a0567bf01233907887149bf6f9120b9984d4740512e41c7496d9",
+          "SKILL.md": "sha256:7ffe309c41107658fa7758b176c0903739bf55633330a9e27944350a67851923",
           "references/check-and-rehearse.md": "sha256:2aa89024fd46b8eaf101ae51eb26ac9c251ad8dad50b3933230cbfbb3e98c2fb",
           "references/ci-gate.md": "sha256:ed7aa6818b1e50c64945ba0ba03cd1e1deb403d657a761a44315b9ac0397a4b0",
-          "references/design.md": "sha256:da36248ed750b7b960d29acc4e66cc2fd0960b719a9e2c4e887e14ad0a4fcbaa",
-          "references/launch-and-wait.md": "sha256:dad157349c91193443c6c09d6e93627aa0b809984e5e960f7b91bd83434abc6a",
-          "references/publish.md": "sha256:490c64aa740d4c53d8a2f3a838872e7a77676d0979b398ad295b22352e42abf8",
+          "references/design.md": "sha256:87d9c862781a04941cf459760e6603d3180a316bc48700b8e17eef5621f73211",
+          "references/launch-and-wait.md": "sha256:3cbbd0d2a0637aae45e5f29fa74f62adbf94c388276c3e9c566b6ef1c0d7cdc2",
+          "references/publish.md": "sha256:2029bf304e24f1f0ef6e9fc001d167d3f95dd8248f49d71c57785b8f5292f297",
           "references/reading-results.md": "sha256:b92309dcf72fe071687dff740503ad086c634531727a6907d301499c2bb960eb",
-          "references/tasks-and-grading.md": "sha256:8ee97174fa248fa5db49ee3bf6aafe817823e8a5d7178fcec789ec88137315e3",
+          "references/tasks-and-grading.md": "sha256:f674f5c718899a1d1a851938c530ff98e406fce5bc0e38b0e69e0b0595be00bf",
           "references/test-awareness.md": "sha256:6ae9cdf8e686f016e0330db6e8ba0ced3b0b6df9b16bca9dcaf3f78b59479c8b",
-          "references/troubleshooting.md": "sha256:c39253698215d425ffdd97ad46dd196aae965b827a66e6995b3a6457517f48a3"
+          "references/troubleshooting.md": "sha256:961d330596acd27f8f139ab71a6d2d0357bdfb20073f092d1a1ffeb32cf7c2b2"
         }
       }
     }

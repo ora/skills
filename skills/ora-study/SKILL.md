@@ -4,7 +4,7 @@ description: Runs benchmark studies of AI agents with Ora Study and the ora CLI.
 license: MIT
 compatibility: Requires the ora CLI (@ora-ai/cli) 0.30.0 or newer and an Ora Study API key. Install or update with npm install -g @ora-ai/cli
 metadata:
-  version: "1.2.0"
+  version: "1.6.0"
   min-cli-version: "0.30.0"
 ---
 
@@ -19,7 +19,8 @@ compared fairly. You drive it with the `ora` CLI. Add `--json` to a command to r
 
 - `ora whoami` must answer. If it fails, ask the person for an API key with the scopes `study.studies:read`,
   `study.studies:write` and `study.addons:read` (Study -> Settings -> API keys), then run `ora login --api-key`.
-  Add `skills:read` and `skills:write` when the study tests a skill of their own.
+  Add `skills:read` and `skills:write` when the study tests a skill of their own, and `secrets:read`, `secrets:write`
+  and `secrets:bind` when a group or task binds an organization secret.
 - Every field of a study's body is a flag. `ora study create --help` lists each one, the keys an object takes and the
   values each key allows. A body can also go in a JSON file (`--file body.json`); a flag wins over the same field of
   the file. `--print-body` shows the body and sends nothing.
@@ -56,7 +57,8 @@ The number of groups decides the form:
 - A command-line tool a group should already have is the `packages` add-on: installed before the agent starts, at no
   cost to the agent, and never announced to it (see design.md).
 - The files, downloads and git repositories a task needs in the agent's workspace are that task's `files` (see
-  tasks-and-grading.md).
+  tasks-and-grading.md). A private repository names an organization secret that holds its token: never the token
+  itself, and never in the address.
 - Grade with `--lenses judge` (a blind judge panel against each task's rubric), and add `evals` for deterministic
   checks.
 
@@ -137,7 +139,8 @@ rubrics. [references/publish.md](references/publish.md) covers what stays privat
 - Finish by handing over the report link, exactly as the answer gave it in `study.links.report`. Never build an
   address yourself. `shareUrl` is a different link: it carries an unlisted study's share token, so it goes only to
   the outside readers the person chose.
-- Publish without `--slug` unless the person asks for a different address. A different slug moves the study: the
-  report link you handed over stops opening. If they do ask, hand over the new `study.links.report` from the
-  publish answer and say the earlier link no longer opens.
+- Pass `--slug` only when the person asks for a different address. It moves the study, and only once: a second
+  move is refused (409 `study_address_fixed`). The report link you handed over before keeps working (it sends its
+  readers on), so nothing needs taking back: hand over the new `study.links.report` from the publish answer as the
+  address to use from now on.
 - A refusal names its code: [references/troubleshooting.md](references/troubleshooting.md) says what each means.

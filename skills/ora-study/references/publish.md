@@ -23,12 +23,17 @@
 
 `ora study publish <id> --visibility public` lists the study in the public catalog; `--visibility link` publishes it
 unlisted, opened only through the share link in the answer. `--visibility` is required on a first publication.
-`--slug <slug>` names its URL (lowercase letters, digits and hyphens); without it the study keeps its own.
+`--slug <slug>` names its URL (lowercase letters, digits and hyphens); without it the study keeps the one it has.
+Pass it only when the person asks for a different address.
 
-A different slug moves the study. Its report link has been stated since launch (`study.links.report`), and every
-copy of the earlier one stops opening: the one you gave the person, and any their organization shared. Pass `--slug`
-only when the person asks for a different address, then hand over the new `study.links.report` from the publish
-answer and say the earlier link no longer opens.
+A different slug moves the study to that address, and a study's address changes once: a second move is refused
+(409 `study_address_fixed`), so leave `--slug` out of every later publish. Its report link has been stated since
+launch (`study.links.report`), and every copy of the earlier one keeps working: the earlier address stays the
+study's own and sends its readers on to the report at the new one. Hand over the new `study.links.report` from the
+publish answer as the address to use from now on. A slug any other study holds, or has held, is refused (409
+`study_slug_taken`), whichever organization it belongs to: every address a study has held keeps opening that study.
+
+Only the report follows a former address. A run's page and the API's reads by slug answer at the current address.
 
 Without `--slug`, the published page is the study's report at the same address as before publishing:
 `study.links.report`. That link carries no share token. For an unlisted study, the link an outside reader needs is

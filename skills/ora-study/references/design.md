@@ -62,6 +62,13 @@ lists the add-ons a harness can run and what each takes.
   `"mcp#docs": { "name": "docs", "transport": "http", "url": "https://docs.example.com/mcp" }`. `stdio` needs an
   exact-pinned `package`. Headers and environment values can be bound to the org's secrets (`envBindings`), never
   written into the body.
+- **An organization secret** (a key the agents use, an MCP server's header, a token for a private repository) is
+  stored once and named in the body by its id. With a CLI newer than 0.32.0: `ora study secrets list --json` lists
+  each secret's name and id (never a value: none can be read back), `ora study secrets create` stores one and answers
+  its id, and `ora study secrets delete <id>` removes one. Older CLIs: the person adds it in the Study app (Secrets).
+  A Viewer lists names only and can neither create nor delete. Never ask the person to paste a secret's value to you:
+  they create it themselves, or you create it from a file they keep (`.env`) without printing it, for example
+  `jq -n '{name: "MY_KEY", value: env.MY_KEY}' | ora study secrets create --file - --json`.
 - **Tools** (`"tools": "default" | "none" | {"tools": [...]}`) apply to model-API agents only: a harness brings its own
   tools, so two groups that differ only in `tools` on a harness-only study are refused.
 - **Web tools off** is the `web-access` add-on: `"web-access": { "mode": "off" }` switches off the agent's own web

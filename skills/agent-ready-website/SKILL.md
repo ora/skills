@@ -138,7 +138,7 @@ Grouped by scoring layer; tier groupings are advisory (see Step 3).
 - `agent-instruction` - Tell agents when to reach for you: add a 'when to use this' section to your llms.txt (or a dedicated agent-instructions file) that names your best-fit use cases and how an agent should call you. Be specific about the jobs you are right for - generic marketing copy does not read as guidance.
 - `metadata-completeness` - Add all four signals to your homepage: <link rel="canonical"> pointing to the page on your own site, <html lang="...">, <meta property="og:image">, and <meta property="og:type">. Agents use these for entity resolution and attribution.
 - `trust-anchors` - Publish real /about, /contact, and /privacy pages with at least 500 characters of content each. These are the pages AI agents check to verify your business is legitimate before recommending you.
-- `openapi-spec` - Publish an OpenAPI (Swagger) specification at /openapi.json or /api/openapi.yaml. This is how agents understand your API surface automatically.
+- `openapi-spec` - Publish an OpenAPI (Swagger) specification at /openapi.json, or link it from your llms.txt or /.well-known/api-catalog. This is how agents understand your API surface automatically.
 
 **Recommended:**
 
@@ -172,7 +172,7 @@ Grouped by scoring layer; tier groupings are advisory (see Step 3).
 - `code-fence-validity` - Close every fenced code block (``` or ~~~) in your served markdown. CommonMark treats everything after an unclosed fence as code, so an agent parsing the document silently loses the rest of it. Count fence lines per file - the total must be even.
 - `api-catalog-rfc9727` - Publish an API catalog at /.well-known/api-catalog per RFC 9727. Serve it with Content-Type: application/linkset+json;profile="https://www.rfc-editor.org/info/rfc9727" and include a 'linkset' array with item entries pointing to your OpenAPI specs and service descriptions.
 - `markdown-negotiation` - Pick one: (a) return Content-Type: text/markdown on GET <homepage> when the request sends Accept: text/markdown, or (b) publish a static /llms.md, /auth.md, or /agents.md file at your root with real markdown content. Option (b) is usually a single static file. This is the cold-discovery path for agents that land at your homepage from web search without reading llms.txt first.
-- `agent-ua-markdown` - Optionally detect AI-bot User-Agents (GPTBot, ClaudeBot, PerplexityBot) server-side and serve them a markdown representation of the page directly, even when they send Accept: text/html. Verify with `curl -A "ClaudeBot/1.0" https://yourdomain.com/` - a markdown body earns this bonus. Accept-header negotiation is scored separately.
+- `agent-ua-markdown` - Optionally recognize the AI agents that fetch a page for a person (ChatGPT-User, Claude-User, Perplexity-User) and send them a markdown version when they accept any format (Accept: */*). An agent that asks for HTML (Accept: text/html) should still get HTML. Verify with `curl -A "Claude-User/1.0" -H "Accept: */*" https://yourdomain.com/` (markdown) and the same with `-H "Accept: text/html"` (HTML). Accept-header negotiation for text/markdown is scored separately.
 
 ### Usability (40 pts) - Can agents use you?
 

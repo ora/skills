@@ -23,6 +23,7 @@
 | `every group runs the same agents` | Send those agents as `matrix` instead of `cells` |
 | 422 `LENS_REQUIREMENT_UNMET` | A task lacks what a lens needs: 2 to 8 rubric criteria for `judge`, `expectations` for `evals` |
 | 422 `study_matrix_invalid` | An agent that is not in the catalog, a harness that cannot run tasks with steps, or an agent not proven to work where a task's files are put (the refusal names it) on a task that declares `files` |
+| 422 `study_subject_invalid` naming a task's private repository | The deployment does not clone private repositories ("does not clone a private repository before the agent starts"), the `credential.secretId` is not a secret of the organization, or the caller may not bind a secret (a Viewer, or an API key without `secrets:bind`). See tasks-and-grading.md |
 | 422 naming `tasks[i].files` | A task file the rules refuse (see tasks-and-grading.md): a `ref` that is a branch or a tag, an empty inline file, a download address with a user name, a password or a query string, a file named AGENTS.md, CLAUDE.md or CONVENTIONS.md at the workspace root, a path under a dot entry of the root, an entry with two sources or none, a path twice, or a size or count over its limit |
 | 422 `study_pacing_invalid` | A pacing value below the number of groups that run one agent |
 | 422 `run_screen_unsupported` | A screen this deployment does not run |
@@ -39,7 +40,7 @@
 | 409 `study_invalid_state` | The study is not in the state the command needs (`ora study get <id>` says which it is) |
 | 409 `study_archived` | The study is archived: `ora study restore <id>` |
 | 422 `addon_conflict` at launch | Two `packages` entries of one group install the same package at different versions: keep one |
-| A run that failed before its agent started | A task file's download did not match its `sha256` or `sizeBytes`, or its address did not answer, or a repository's commit could not be cloned: fix the task's `files` in a new study, since they are frozen at create |
+| A run that failed before its agent started | A task file's download did not match its `sha256` or `sizeBytes`, or its address did not answer, or a repository's commit could not be cloned: fix the task's `files` in a new study, since they are frozen at create. For a private repository the reason also names a secret the run could not fetch or a token the git host refused: fix the secret's value, which later runs fetch, and re-run the failed runs. GitHub says `Invalid username or token` and `Authentication failed` for a revoked, expired or mistyped token, and `Write access to repository not granted` with `error: 403` for a token it accepts that does not cover this repository (its wording, for a read too) |
 | 422 `study_extend_rebases_contrast` | Adding those agents would change a comparison's basis: add agents every compared group runs |
 | `study_extend_blocked` | A re-run or a launch holds the study, or it changed during the call: retry |
 | 422 `gate_unit_mismatch`, `gate_group_unknown`, `gate_series_required` | A threshold in the wrong unit, a group the study does not have (or none named among several), or a series baseline on a study with no `series` |
