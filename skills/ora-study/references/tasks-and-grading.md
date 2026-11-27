@@ -48,19 +48,21 @@ they can never be what a comparison measures. What only one group is given is th
   "files": [
     { "path": "package.json", "content": "{ \"name\": \"store\", \"private\": true }\n" },
     { "path": "product.jpg", "url": "https://example.com/fixtures/product.jpg", "sha256": "<64 hex>", "sizeBytes": 48213 },
-    { "path": "store", "repo": { "url": "https://github.com/acme/express-store", "ref": "<full commit>" } }
+    { "path": "store", "repo": { "url": "https://github.com/acme/express-store", "ref": "<full commit>" } },
+    { "path": "billing", "repo": { "url": "https://github.com/acme/billing-service", "ref": "<full commit>",
+      "credential": { "secretId": "<id of the organization secret that holds a read token>" } } }
   ]
 }
 ```
 
-Declare them in the body file or in a `--task @task.json`. The Study app's builder has no screen for them yet. Each
-entry has a `path` and exactly one source:
+Declare them in the body file or in a `--task @task.json`, or in the Study app's builder (each authored task has a
+Files section). Each entry has a `path` and exactly one source:
 
 | Source | Fields | For |
 | --- | --- | --- |
 | Inline text | `content` | Source files and small fixtures |
 | A verified download | `url`, `sha256`, `sizeBytes` | Anything binary or large |
-| A public git repository | `repo`: `url`, `ref`, optional `subpath` | An existing codebase the task works in |
+| A git repository | `repo`: `url`, `ref`, optional `subpath`, optional `credential` | An existing codebase the task works in, public or private |
 
 - **`path`** is relative to the workspace root, where the agent starts: no leading `/`, no `.` or `..` segment, and
   not under a dot entry of the root (`.claude/notes.md` is refused, `store/.gitignore` is fine). No path twice, and no
@@ -74,12 +76,30 @@ entry has a `path` and exactly one source:
   that changed upstream never becomes a different task. The address must answer without a login and be plain: one
   with a user name, a password or a query string is refused, because it is stored and shown with the task.
 - **A repository** is cloned into its `path` with its `.git` directory, so the agent can read history and commit.
-  `url` is the `https://` address of a public repository, with no credential in it. `ref` is a full commit (40 or 64
+  `url` is the plain `https://` address of the repository, with no credential in it. `ref` is a full commit (40 or 64
   hex characters): a branch or a tag is refused, because it can move and the task would change under the study.
-  `subpath` puts one directory of the repository at `path` and leaves the rest out. A private repository cannot be
-  attached.
-- A download that does not match or does not answer, or a commit that cannot be cloned, fails the run before its
-  agent starts.
+  `subpath` puts one directory of the repository at `path` and leaves the rest out.
+- **A private repository** adds `"credential": { "secretId": "<id>" }`: the id of an organization secret whose value
+  is a token that can read the repository (on GitHub, a fine-grained token with read-only Contents on that one
+  repository). Never put a token in the address or anywhere in the body. Ask the person to store the token as an
+  organization secret themselves (the Study app's Secrets page, or `ora study secrets create` in their own terminal),
+  then read its id with `ora study secrets list --json`; do not ask them to paste the token to you.
+  - Nothing of Ora reads the token. Each run fetches it itself when it boots and uses it for the clone only. The
+    agent starts with the repository checked out and without the token: it is not in the agent's environment, in the
+    checkout's git configuration or in any file of the workspace, so the agent cannot fetch from or push to the
+    private remote.
+  - Preflight and create check the secret as the caller: it must be the organization's, and the caller must be
+    allowed to bind a secret (any role except Viewer; an API key also needs the `secrets:bind` scope). Otherwise the
+    answer is 422 `study_subject_invalid`, naming the task and the repository.
+  - Not every deployment clones private repositories. One that does not answers 422 `study_subject_invalid` with
+    "does not clone a private repository before the agent starts". Tell the person so; do not work around it by
+    asking the agent to clone, because a clone by the agent is part of what the study would measure.
+  - A published page shows a private repository as its path and the words "Private repository": no address, no
+    commit, no secret. A published study still shows what each agent read and wrote, so its runs can show the
+    repository's contents. Say this before publishing.
+- A download that does not match or does not answer, a commit that cannot be cloned, a secret that can no longer be
+  fetched or a token the git host refuses fails the run before its agent starts. The run's reason says which step
+  failed and what it said.
 
 | What | Limit |
 | --- | --- |

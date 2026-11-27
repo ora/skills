@@ -37,7 +37,8 @@ Everyone in the study's organization can open the report once it is open, with n
 study's `visibility` (see publish.md). The report link never carries a share token.
 
 The link is the study's current address. It changes only if the study is published under a different slug
-(`ora study publish --slug`), and the earlier link then stops opening (see publish.md).
+(`ora study publish --slug`), and only once. A report link handed out before keeps working: it sends its readers on
+to the new address (see publish.md).
 
 Give the person the report link when you launch, and again with the results. Before the study completes, say that
 it opens when the study completes. A CLI newer than 0.30.0 ends `ora study launch`, `run`, `get` and `publish` with
